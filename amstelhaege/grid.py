@@ -2,13 +2,20 @@ import matplotlib.pyplot as plt
 from matplotlib.path import Path
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
+import Classes.py
 
-eengezinswoning = [
-    (0.856, 0.),   # left, bottom
-    (0.856, 8.),  # left, top
-    (8.856, 8.), # right, top
-    (8.856, 0.),  # right, bottom
-    (0., 0.),   # ignored
+a = 8/2
+b = 8/2
+
+x = 20
+y = 20
+
+pos = [
+    ((x-a), (y-b)), # left, bottom
+    ((x-a), (y+b)), # left, top
+    ((x+a), (y+b)), # right, top
+    ((x+a), (y-b)), # right, bottom
+    (0., 0,)        # ingored
 ]
 
 codes = [
@@ -19,7 +26,7 @@ codes = [
     Path.CLOSEPOLY,
 ]
 
-path = Path(eengezinswoning, codes)
+path = Path(pos, codes)
 
 fig,ax=plt.subplots()
 
