@@ -10,6 +10,9 @@ class PlaceableObject(object):
         self.a = self.w / 2
         self.b = self.l /2
 
+    def coordinates(self):
+        return '{}, {}'.format(self.x, self.y)
+
 class Building(PlaceableObject):
     """Class definition for a house construction"""
 
@@ -24,9 +27,6 @@ class Building(PlaceableObject):
 
     # increase by one each time a house of any type is made
     num_houses += 1
-
-    def coordinates(self):
-        return '{} {}'.format(self.x, self.y)
 
 class House(Building):
     """Class definition for a detached house."""
