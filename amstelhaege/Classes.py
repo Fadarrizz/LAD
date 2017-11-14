@@ -1,6 +1,7 @@
 class PlaceableObject(object):
+
     """Class definition for a placeable object"""
-    
+
     def __init__(self, x, y, width, length):
         self.x = x
         self.y = y
@@ -10,6 +11,9 @@ class PlaceableObject(object):
 class Building(PlaceableObject):
     """Class definition for a house construction"""
 
+    # variable for number of houses created
+    num_houses = 0
+    
     def __init__(self, x, y, width, length, meters_clearance, price, percentage):
         super().__init__(x, y, width, length)
         self.meters_clearance = meters_clearance
@@ -18,8 +22,7 @@ class Building(PlaceableObject):
 
         self.meters_clearance = meters_clearance
 
-    # variable for number of houses created
-    num_houses = 0
+
 
     # increase by one each time a house of any type is made
     num_houses += 1
