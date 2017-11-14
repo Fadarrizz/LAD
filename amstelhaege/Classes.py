@@ -8,7 +8,7 @@ class PlaceableObject(object):
         self.w = w
         self.l = l
         self.a = self.w / 2
-        self.b = self.l /2
+        self.b = self.l / 2
 
     def coordinates(self):
         return '{}, {}'.format(self.x, self.y)
