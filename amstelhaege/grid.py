@@ -2,20 +2,22 @@ import matplotlib.pyplot as plt
 from matplotlib.path import Path
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
-import Classes.py
+import Classes as classes
 
-a = 8/2
-b = 8/2
+t = classes.Bungalow
 
 x = 20
 y = 20
+
+a = t.a
+b = t.b
 
 pos = [
     ((x-a), (y-b)), # left, bottom
     ((x-a), (y+b)), # left, top
     ((x+a), (y+b)), # right, top
     ((x+a), (y-b)), # right, bottom
-    (0., 0,)        # ingored
+    (0., 0,)        # CLOSEPOLY
 ]
 
 codes = [
@@ -46,6 +48,6 @@ ax.add_patch(patch)
 ax.grid(which='major', axis='both', linestyle='-')
 
 # ax.grid(color='gray', linestyle='dashed')
-ax.set_xlim(0, 160)
-ax.set_ylim(0, 180)
+ax.set_xlim(0, 180)
+ax.set_ylim(0, 160)
 plt.show()
