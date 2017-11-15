@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 from matplotlib.path import Path
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
+<<<<<<< HEAD
 from Classes import PlaceableObject
 
 
@@ -10,12 +11,24 @@ x = house1.x
 y = house1.y
 a = house1.a
 b = house1.b
+=======
+import Classes as classes
+
+t = classes.Bungalow
+
+x = 20
+y = 20
+
+a = t.a
+b = t.b
+
+>>>>>>> 6e894be6085c98a3fe468fc3e41604c3aacd58f0
 pos = [
     ((x-a), (y-b)), # left, bottom
     ((x-a), (y+b)), # left, top
     ((x+a), (y+b)), # right, top
     ((x+a), (y-b)), # right, bottom
-    (0., 0,)        # ingored
+    (0., 0,)        # CLOSEPOLY
 ]
 
 codes = [
@@ -46,6 +59,6 @@ ax.add_patch(patch)
 ax.grid(which='major', axis='both', linestyle='-')
 
 # ax.grid(color='gray', linestyle='dashed')
-ax.set_xlim(0, 160)
-ax.set_ylim(0, 180)
+ax.set_xlim(0, 180)
+ax.set_ylim(0, 160)
 plt.show()
