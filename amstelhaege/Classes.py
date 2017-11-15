@@ -1,37 +1,34 @@
-class PlaceableObject:
+class Building(object):
+    """Class definition for a house construction"""
+    # __metaclass__ = ABCMeta
 
-    """Class definition for a placeable object"""
+    width = 0
+    length = 0
+    mtr_clearance = 0
+    price = 0
+    percentage = 0
 
-    def __init__(self, x, y, w, l, a, b):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.w = w
-        self.l = l
-        self.a = self.w / 2
-        self.b = self.l / 2
+
+    def a(self):
+        return self.width / 2
+
+    def b(self):
+        return self.length / 2
 
     def coordinates(self):
         return '{}, {}'.format(self.x, self.y)
 
-class Building(PlaceableObject):
-    """Class definition for a house construction"""
-
-    # variable for number of houses created
-    num_houses = 0
-
-    def __init__(self, x, y, w, l, a, b, meters_clearance, price, percentage):
-        super().__init__(x, y, w, l, a,)
-        self.meters_clearance = meters_clearance
-        self.price = price
-        self.percentage = percentage
-
-    # increase by one each time a house of any type is made
-    num_houses += 1
-
 class House(Building):
     """Class definition for a detached house."""
-    def __init__(self, x, y, w, l, a, b, meters_clearance, price, percentage):
-        super().__init__(x, y, w, l, a, b, meters_clearance, price, percentage)
+
+    width = 8
+    length = 8
+    mtr_clearance = 2
+    price = 285000
+    percentage = 1.04
 
     # def calc_value(self, free_space):
     #     self.free_space = xxxx
@@ -39,8 +36,12 @@ class House(Building):
 
 class Bungalow(Building):
     """Class definition for a detached house."""
-    def __init__(self, x, y):
-        super().__init__(x, y, w, l, a, b, meters_clearance, price, percentage)
+
+    width = 10
+    length = 7.5
+    mtr_clearance = 3
+    price = 399000
+    percentage = 1.04
 
     # def calc_value(self, free_space):
     #     self.free_space = xxxx
@@ -48,14 +49,28 @@ class Bungalow(Building):
 
 class Maison(Building):
     """Class definition for a detached house."""
-    def __init__(self, x, y):
-        super().__init__(x, y, w, l, a, b, meters_clearance, price, percentage)
+
+    width = 11
+    length = 10.5
+    mtr_clearance = 6
+    price = 610000
+    percentage = 1.06
+
 
     # def calc_value(self, free_space):
     #     self.free_space = xxxx
     #     self.value = self.price + self.price * (self.percentage * self.free_space)
 
-class Waterbody(PlaceableObject):
+class Waterbody(object):
     """Class definition for a waterbody."""
-    def __init__(self, x, y , w, l, a, b):
-        super().__init__(x, y , w, l, a, b)
+    def __init__(self, x, y , width, length, a, b):
+        self.x = x
+        self.y = y
+        self.width = width
+        self.length = length
+
+        def a(self):
+            return self.width / 2
+
+        def b(self):
+            return self.length / 2
