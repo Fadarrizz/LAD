@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 from matplotlib.path import Path
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
-<<<<<<< HEAD
 from Classes import PlaceableObject
 
 
@@ -11,18 +10,7 @@ x = house1.x
 y = house1.y
 a = house1.a
 b = house1.b
-=======
-import Classes as classes
 
-t = classes.Bungalow
-
-x = 20
-y = 20
-
-a = t.a
-b = t.b
-
->>>>>>> 6e894be6085c98a3fe468fc3e41604c3aacd58f0
 pos = [
     ((x-a), (y-b)), # left, bottom
     ((x-a), (y+b)), # left, top
