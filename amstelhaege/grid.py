@@ -2,14 +2,14 @@ import matplotlib.pyplot as plt
 from matplotlib.path import Path
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
-import Classes.py
+from Classes import PlaceableObject
 
-a = 8/2
-b = 8/2
 
-x = 20
-y = 20
-
+house1 = PlaceableObject(100, 20, 8, 8, 4, 4)
+x = house1.x
+y = house1.y
+a = house1.a
+b = house1.b
 pos = [
     ((x-a), (y-b)), # left, bottom
     ((x-a), (y+b)), # left, top
