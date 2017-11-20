@@ -3,7 +3,7 @@ import matplotlib.patches as patches
 import matplotlib.ticker as plticker
 
 fig, ax = plt.subplots()
-house = {'house' : patches.Rectangle((20,20), 8, 8)}
+house = {'house' : patches.Rectangle((20,20), 8, 8), 'vrijstand' : patches.Rectangle((20,20), 8*2, 8*2)}
 for i in house:
     ax.add_artist(house[i])
     rx, ry = house[i].get_xy()
