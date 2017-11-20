@@ -1,53 +1,43 @@
 import matplotlib.pyplot as plt
-from matplotlib.path import Path
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
-import Classes as classes
 
-t = classes.Bungalow
+fig, ax = plt.subplots()
+house = {'house' : patches.Rectangle((20,20), 8, 8)}
+for i in house:
+    ax.add_artist(house[i])
+    rx, ry = house[i].get_xy()
+    cx = rx + house[i].get_width()/2.0
+    cy = ry + house[i].get_height()/2.0
+    house[i].set_color('green')
 
-x = 20
-y = 20
+bungalow = {'bungalow' : patches.Rectangle((120, 120), 10, 7.5)}
+for i in bungalow:
+    ax.add_artist(bungalow[i])
+    rx, ry = bungalow[i].get_xy()
+    cx = rx + bungalow[i].get_width()/2.0
+    cy = ry + bungalow[i].get_height()/2.0
+    bungalow[i].set_color('purple')
 
-a = t.a
-b = t.b
+maison = {'maison' : patches.Rectangle((80, 80), 11, 10.5)}
+for i in maison:
+    ax.add_artist(maison[i])
+    rx, ry = maison[i].get_xy()
+    cx = rx + maison[i].get_width()/2.0
+    cy = ry + maison[i].get_height()/2.0
+    maison[i].set_color('red')
 
-pos = [
-    ((x-a), (y-b)), # left, bottom
-    ((x-a), (y+b)), # left, top
-    ((x+a), (y+b)), # right, top
-    ((x+a), (y-b)), # right, bottom
-    (0., 0,)        # CLOSEPOLY
-]
-
-codes = [
-    Path.MOVETO,
-    Path.LINETO,
-    Path.LINETO,
-    Path.LINETO,
-    Path.CLOSEPOLY,
-]
-
-path = Path(pos, codes)
-
-fig,ax=plt.subplots()
-
-# Fixed spacing
 plt.axis('scaled')
+
+# Dashed grid lines
+ax.grid(which='major', axis='both', linestyle='-')
 
 # Spacing between each line
 intervals = 10
-
 loc = plticker.MultipleLocator(base=intervals)
 ax.xaxis.set_major_locator(loc)
 ax.yaxis.set_major_locator(loc)
 
-patch = patches.PathPatch(path, facecolor='orange', lw=2)
-ax.add_patch(patch)
-
-ax.grid(which='major', axis='both', linestyle='-')
-
-# ax.grid(color='gray', linestyle='dashed')
 ax.set_xlim(0, 180)
 ax.set_ylim(0, 160)
 plt.show()
