@@ -5,7 +5,7 @@ import matplotlib.ticker as plticker
 from Classes import Building, House, Bungalow, Maison
 
 
-house1 = House(100, 20, 8, 8, 4, 4)
+house1 = House(100, 20)
 x = house1.x
 y = house1.y
 a = house1.a
