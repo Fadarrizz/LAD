@@ -11,12 +11,8 @@ class Building(object):
     def __init__(self, x, y):
         self.x = x
         self.y = y
-
-    def a(self):
-        return self.width / 2
-
-    def b(self):
-        return self.length / 2
+        self.a = self.width / 2
+        self.b = self.length / 2
 
     def coordinates(self):
         return '{}, {}'.format(self.x, self.y)
