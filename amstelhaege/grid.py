@@ -2,10 +2,10 @@ import matplotlib.pyplot as plt
 from matplotlib.path import Path
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
-from Classes import PlaceableObject
+from Classes import Building, House, Bungalow, Maison
 
 
-house1 = PlaceableObject(100, 20, 8, 8, 4, 4)
+house1 = House(100, 20, 8, 8, 4, 4)
 x = house1.x
 y = house1.y
 a = house1.a
