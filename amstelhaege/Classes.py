@@ -8,7 +8,8 @@ class Building(object):
     price = 0
     percentage = 0
 
-    def __init__(self, x, y):
+    def __init__(self, name, x, y):
+        self.name = name
         self.x = x
         self.y = y
         self.a = self.width / 2
@@ -19,7 +20,6 @@ class Building(object):
 
 class House(Building):
     """Class definition for a detached house."""
-
     width = 8
     length = 8
     mtr_clearance = 2
@@ -32,7 +32,6 @@ class House(Building):
 
 class Bungalow(Building):
     """Class definition for a detached house."""
-
     width = 10
     length = 7.5
     mtr_clearance = 3
