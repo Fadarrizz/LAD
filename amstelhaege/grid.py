@@ -1,52 +1,74 @@
 import matplotlib.pyplot as plt
-from matplotlib.path import Path
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
-from Classes import Building, House, Bungalow, Maison
+import csv
+import sys
+from random import randint
+from Classes import *
 
-
-house1 = House(100, 20)
-x = house1.x
-y = house1.y
-a = house1.a
-b = house1.b
-
-pos = [
-    ((x-a), (y-b)), # left, bottom
-    ((x-a), (y+b)), # left, top
-    ((x+a), (y+b)), # right, top
-    ((x+a), (y-b)), # right, bottom
-    (0., 0,)        # CLOSEPOLY
-]
-
-codes = [
-    Path.MOVETO,
-    Path.LINETO,
-    Path.LINETO,
-    Path.LINETO,
-    Path.CLOSEPOLY,
-]
-
-path = Path(pos, codes)
-
-fig,ax=plt.subplots()
-
-# Fixed spacing
+# Grid initialization
+fig, ax = plt.subplots()
 plt.axis('scaled')
-
-# Spacing between each line
+ax.grid(which='major', axis='both', linestyle='-')
 intervals = 10
-
 loc = plticker.MultipleLocator(base=intervals)
 ax.xaxis.set_major_locator(loc)
 ax.yaxis.set_major_locator(loc)
-
-patch = patches.PathPatch(path, facecolor='orange', lw=2)
-ax.add_patch(patch)
-
-ax.grid(which='major', axis='both', linestyle='-')
-
-# ax.grid(color='gray', linestyle='dashed')
 ax.set_xlim(0, 180)
 ax.set_ylim(0, 160)
+
+#
+building = []
+
+amount = int(input("How much buildings? (20, 40 or 60) \n"))
+
+h = int((amount * 0.6))
+b = int((amount * 0.25))
+m = int((amount * 0.15))
+
+hArr    = ['h'] * h
+bArr    = ['b'] * b
+mArr    = ['m'] * m
+building.extend(hArr+bArr+mArr)
+
+print(building)
+
+for i in building:
+
+    if i == 'h':
+        name    = 'H'
+        bType   = House
+        color   = 'green'
+
+    elif i == 'b':
+        name    = 'B'
+        bType   = Bungalow
+        color   = 'purple'
+
+    elif i == 'm':
+        name    = 'M'
+        bType   = Maison
+        color   = 'red'
+
+    # Random coordinates
+    x = randint(0, 180)
+    y = randint(0, 160)
+
+    # Create class object and add to array
+    temp = bType(name + str(i), x, y)
+    Building.arr.append(temp)
+
+    # Temp variable with building information
+    temp = patches.Rectangle((x, y), bType.width,
+            bType.length, color=color)
+
+    # Additional map values
+    rx, ry  = temp.get_xy()
+    cx      = rx + temp.get_width()/2.0
+    cy      = ry + temp.get_height()/2.0
+
+    # Add building to map
+    ax.add_artist(temp)
+
+# Show map
 plt.show()
