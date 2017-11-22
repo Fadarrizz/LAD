@@ -25,7 +25,6 @@ class House(Building):
     mtr_clearance   = 2
     price           = 285000
     percentage      = 1.04
-    arr             = []
 
     # def calc_value(self, free_space):
     #     self.free_space = xxxx
@@ -38,7 +37,6 @@ class Bungalow(Building):
     mtr_clearance   = 3
     price           = 399000
     percentage      = 1.04
-    arr             = []
 
     # def calc_value(self, free_space):
     #     self.free_space = xxxx
@@ -51,7 +49,6 @@ class Maison(Building):
     mtr_clearance   = 6
     price           = 610000
     percentage      = 1.06
-    arr             = []
 
     # def calc_value(self, free_space):
     #     self.free_space = xxxx
