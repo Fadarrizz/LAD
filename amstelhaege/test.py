@@ -6,5 +6,7 @@ tempArr  = [];
 x = randint(0,180)
 y = randint(0,160)
 
-temp = House('H' + '1', Coordinates(x, y, House.width, House.length))
+temp = House('H' + '1', Coordinates(House.width, House.length))
 tempArr.append(temp)
+
+print (y)

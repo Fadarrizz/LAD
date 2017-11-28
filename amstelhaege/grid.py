@@ -34,7 +34,6 @@ building.extend(hArr+bArr+mArr)
 print(building)
 
 for i in building:
-
     if i == 'h':
         name    = 'H'
         bType   = House
@@ -69,6 +68,9 @@ for i in building:
 
     # Add building to map
     ax.add_artist(temp)
+
+for i in hArr:
+    print(House.x)
 
 # Show map
 plt.show()
