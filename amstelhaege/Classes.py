@@ -12,6 +12,9 @@ class Building(object):
         self.name   = name
         self.x      = x
         self.y      = y
+        self.topright = self.x + self.width
+        self.bottomleft = self.y - self.length
+        self.bottomright = self.topright - self.length
 
     def coordinates(self):
         return '{}, {}'.format(self.x, self.y)
