@@ -12,8 +12,6 @@ class Building(object):
         self.name   = name
         self.x      = x
         self.y      = y
-        self.a      = self.width / 2
-        self.b      = self.length / 2
 
     def coordinates(self):
         return '{}, {}'.format(self.x, self.y)
@@ -54,9 +52,21 @@ class Maison(Building):
     #     self.free_space = xxxx
     #     self.value = self.price + self.price * (self.percentage * self.free_space)
 
+class Coordinates(object):
+    """Class definition for coordinates."""
+    def __init__(self, x, y, width, length):
+        self.lb     = (x, y)
+        self.lt     = (x, (y+length))
+        self.rt     = ((x+width), (y+length))
+        self.rb     = ((x+width), y)
+
+        def coordinates(self):
+            return '{}, {}, {}, {}'.format(self.lb, self.lt, self.rt,
+                                    self.rb)
+
 class Waterbody(object):
     """Class definition for a waterbody."""
-    def __init__(self, x, y , width, length, a, b):
+    def __init__(self, x, y, width, length, a, b):
         self.x      = x
         self.y      = y
         self.width  = width
