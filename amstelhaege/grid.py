@@ -1,8 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
-# import csv
-# import sys
+import csv
+import sys
 from random import randint
 from Classes import *
 
@@ -17,7 +17,7 @@ ax.yaxis.set_major_locator(loc)
 ax.set_xlim(0, 180)
 ax.set_ylim(0, 160)
 
-# Map placement queue
+#
 building = []
 coords = []
 
@@ -37,7 +37,6 @@ building.extend(hArr+bArr+mArr)
 print(building)
 
 for i in building:
-
     if i == 'h':
         name    = 'H'
         bType   = House
@@ -68,8 +67,16 @@ for i in building:
     temp = patches.Rectangle((x, y), bType.width,
             bType.length, color=color)
 
+    # Additional map values
+    rx, ry  = temp.get_xy()
+    cx      = rx + temp.get_width()/2.0
+    cy      = ry + temp.get_height()/2.0
+
     # Add building to map
     ax.add_artist(temp)
+
+for i in hArr:
+    print(House.x)
 
 # Show map
 plt.show()
