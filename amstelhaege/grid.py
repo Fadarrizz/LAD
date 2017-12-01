@@ -19,10 +19,10 @@ ax.set_ylim(0, 160)
 
 # Map placement queue
 building = []
+coords = []
 
 amount = int(input("How much buildings? (20, 40 or 60) \n"))
-if not amount == 20 & amount == 40 &
-amount == 60:
+if not amount == 20 & amount == 40 & amount == 60:
     print("Please provide 20, 40 or 60")
 
 h = int((amount * 0.6))
@@ -61,6 +61,9 @@ for i in building:
     temp = bType(name + str(i), x, y)
     Building.arr.append(temp)
 
+    # Add coordinates to array
+    coords.append(temp.coordinates)
+
     # Temp variable with building information
     temp = patches.Rectangle((x, y), bType.width,
             bType.length, color=color)
@@ -70,3 +73,11 @@ for i in building:
 
 # Show map
 plt.show()
+
+# def place_checker(x, y):
+#     for coord in coords:
+#         if x > item for item in a if item[0] ]
+#         for item in a:
+#             if x > item[0] and x < (item[0]
+#
+#         if x > item[0
