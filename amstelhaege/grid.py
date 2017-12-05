@@ -52,8 +52,12 @@ for i in building:
         bType   = Maison
         color   = 'red'
 
+    # Create class object and add to array
+    temp = bType(name + str(i), 0, 0)
+
     # Random coordinates
-    xy = getCoordinates(bType)
+    xy = getCoordinates(temp)
+    print(xy)
     x = xy[0]
     y = xy[1]
 

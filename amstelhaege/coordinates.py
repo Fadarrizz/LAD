@@ -6,19 +6,26 @@ coordsY = []
 
 def getCoordinates(bType):
 
+
+
     x = randint(0, 180)
     y = randint(0, 160)
 
     w = bType.width
     l = bType.length
 
-    for i in Building.arr:
+    print("i dunno where im going")
+    count = 0
 
-        if not Building.arr:
+    for i in Building.arr:
+        print ("im in the loop")
+
+        if Building.arr == []:
             count += 1
+            print("im counting", count)
 
         else:
-
+            print("i'm getting the house.lb etc")
             lbX = bType.LB[0]
             ltX = bType.LT[0]
             rtX = bType.RT[0]
@@ -32,15 +39,14 @@ def getCoordinates(bType):
             for j in coordsX:
                 x1 = j[0]
                 x2 = j[1]
-
+                print ("in the second loop")
                 for k in coordsY:
                     y1 = k[0]
                     y2 = k[1]
 
-                    while ((x >= x1 and x <= x2) and (y >= y1 and y <= y2))
-                    and (((x + bType.width) >= x1) and ((x + bType.width) <= x2)
-                    and ((y + bType.length) >= y1) and ((y + bType.length) <= y2)):
-
+                    while (((x1 <= x <= x2) and (y1 <= y <= y2)) and (((x + bType.width) >= x1)
+                    and ((x + bType.width) <= x2)) and (((y + bType.length) >= y1)
+                    and ((y + bType.length) <= y2))):
                         x = randint(0, 180)
                         y = randint(0, 180)
 
