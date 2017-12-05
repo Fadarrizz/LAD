@@ -11,8 +11,10 @@ class Building(object):
         self.name   = name
         self.x      = x
         self.y      = y
-        self.coordinates = [(x,y), (x, (y + self.length)), ((x + self.width),
-                        (y + self.length)), ((x + self.width), y)]
+        self.LB = (x,y)
+        self.LT = (x, (y + self.length))
+        self.RT = ((x + self.width), (y + self.length))
+        self.RB = ((x + self.width), y)
 
     def __repr__(self):
         return coordinates

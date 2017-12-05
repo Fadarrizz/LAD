@@ -1,10 +1,8 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
-import csv
-import sys
-from random import randint
 from Classes import *
+from coordinates import getCoordinates
 
 # Grid initialization
 fig, ax = plt.subplots()
@@ -17,9 +15,11 @@ ax.yaxis.set_major_locator(loc)
 ax.set_xlim(0, 180)
 ax.set_ylim(0, 160)
 
-#
+# empty array
+Building.arr = []
+
+# init temp array
 building = []
-coords = []
 
 amount = int(input("How much buildings? (20, 40 or 60) \n"))
 if not amount == 20 & amount == 40 & amount == 60:
@@ -53,15 +53,15 @@ for i in building:
         color   = 'red'
 
     # Random coordinates
-    x = randint(0, 180)
-    y = randint(0, 160)
+    xy = getCoordinates(bType)
+    x = xy[0]
+    y = xy[1]
+
+    tempName = name + str(i)
 
     # Create class object and add to array
     temp = bType(name + str(i), x, y)
     Building.arr.append(temp)
-
-    # Add coordinates to array
-    coords.append(temp.coordinates)
 
     # Temp variable with building information
     temp = patches.Rectangle((x, y), bType.width,
@@ -75,16 +75,5 @@ for i in building:
     # Add building to map
     ax.add_artist(temp)
 
-for i in hArr:
-    print(House.x)
-
 # Show map
 plt.show()
-
-# def place_checker(x, y):
-#     for coord in coords:
-#         if x > item for item in a if item[0] ]
-#         for item in a:
-#             if x > item[0] and x < (item[0]
-#
-#         if x > item[0
