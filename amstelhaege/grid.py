@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
 from Classes import *
-from coordinates import getCoordinates
+from BuildingGenerator import *
 
 # Grid initialization
 fig, ax = plt.subplots()
@@ -23,62 +23,12 @@ water = patches.Rectangle((water.x, water.y), water.width,
         water.length, color='blue')
 ax.add_artist(water)
 
+buildingGenerator()
 
-# empty array
-Building.arr = []
-
-# init temp array
-building = []
-
-amount = int(input("How much buildings? (20, 40 or 60) \n"))
-if not amount == 20 & amount == 40 & amount == 60:
-    print("Please provide 20, 40 or 60")
-
-h = int((amount * 0.6))
-b = int((amount * 0.25))
-m = int((amount * 0.15))
-
-hArr    = ['h'] * h
-bArr    = ['b'] * b
-mArr    = ['m'] * m
-building.extend(hArr+bArr+mArr)
-
-print(building)
-
-for i in building:
-    if i == 'h':
-        name    = 'H'
-        bType   = House
-        color   = 'green'
-
-    elif i == 'b':
-        name    = 'B'
-        bType   = Bungalow
-        color   = 'purple'
-
-    elif i == 'm':
-        name    = 'M'
-        bType   = Maison
-        color   = 'red'
-
-    # Create class object and add to array
-    temp = bType(name + str(i), 0, 0)
-
-    # Random coordinates
-    xy = getCoordinates(temp)
-    print(xy)
-    x = xy[0]
-    y = xy[1]
-
-    tempName = name + str(i)
-
-    # Create class object and add to array
-    # temp = bType(name + str(i), x, y)
-    Building.arr.append(temp)
-
+for i in Building.arr:
     # Temp variable with building information
-    temp = patches.Rectangle((x, y), bType.width,
-            bType.length, color=color)
+    temp = patches.Rectangle((i.x, i.y), i.width, i.length,
+            color=i.color)
 
     # Add building to map
     ax.add_artist(temp)
