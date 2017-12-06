@@ -18,14 +18,9 @@ class Building(object):
         self.RB = ((x + self.width), y)
         self.coordinates = [(x,y), (x, (y + self.length)), ((x + self.width),
                         (y + self.length)), ((x + self.width), y)]
-<<<<<<< Updated upstream
+
     def __repr__(self):
         return coordinates
-=======
-
-    # def __repr__(self):
-    #     return coordinates
->>>>>>> Stashed changes
 
 class House(Building):
     """Class definition for a detached house."""

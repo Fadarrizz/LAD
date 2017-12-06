@@ -21,11 +21,6 @@ water = Waterbody(100, 88, 80, 72)
 # Temp variable with building information
 water = patches.Rectangle((water.x, water.y), water.width,
         water.length, color='blue')
-
-# Additional map values
-rx, ry  = water.get_xy()
-cx      = rx + water.get_width()/2.0
-cy      = ry + water.get_height()/2.0
 ax.add_artist(water)
 
 
@@ -84,11 +79,6 @@ for i in building:
     # Temp variable with building information
     temp = patches.Rectangle((x, y), bType.width,
             bType.length, color=color)
-
-    # Additional map values
-    rx, ry  = temp.get_xy()
-    cx      = rx + temp.get_width()/2.0
-    cy      = ry + temp.get_height()/2.0
 
     # Add building to map
     ax.add_artist(temp)

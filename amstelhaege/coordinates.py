@@ -6,8 +6,6 @@ coordsY = []
 
 def getCoordinates(bType):
 
-
-
     x = randint(0, 180)
     y = randint(0, 160)
 
@@ -20,16 +18,11 @@ def getCoordinates(bType):
     for i in Building.arr:
         print ("im in the loop")
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
         if Building.arr == []:
             count += 1
             print("im counting", count)
 
         else:
-<<<<<<< Updated upstream
             print("i'm getting the house.lb etc")
             lbX = bType.LB[0]
             ltX = bType.LT[0]
@@ -40,18 +33,6 @@ def getCoordinates(bType):
             ltY = bType.LT[1]
             rtY = bType.RT[0]
             rbY = bType.RB[0]
-=======
-            print("ik kom bij de else")
-            # lbX = bType.LB[0]
-            # ltX = bType.LT[0]
-            # rtX = bType.RT[0]
-            # rbX = bType.RB[0]
-            #
-            # rbY = bType.LB[1]
-            # ltY = bType.LT[1]
-            # rtY = bType.RT[0]
-            # rbY = bType.RB[0]
->>>>>>> Stashed changes
 
             for j in coordsX:
                 x1 = j[0]
@@ -60,7 +41,6 @@ def getCoordinates(bType):
                 for k in coordsY:
                     y1 = k[0]
                     y2 = k[1]
-<<<<<<< Updated upstream
 
                     print ("in the third loop")
                     #
@@ -81,10 +61,6 @@ def getCoordinates(bType):
                     #         x = randint(0, 180)
                     #         y = randint(0, 180)
 
-=======
-                    print("ik kom in for2")
-                    while ((x >= x1 and x <= x2) and (y >= y1 and y <= y2)) and (((x + bType.width) >= x1) and ((x + bType.width) <= x2) and ((y + bType.length) >= y1) and ((y + bType.length) <= y2)):
->>>>>>> Stashed changes
 
                     while (((x1 <= x <= x2) and (y1 <= y <= y2)) and (((x + bType.width) >= x1)
                     and ((x + bType.width) <= x2)) and (((y + bType.length) >= y1)
