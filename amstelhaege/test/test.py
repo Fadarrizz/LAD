@@ -1,35 +1,27 @@
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import matplotlib.ticker as plticker
 from random import randint
-from classes import *
 
-def getCoordinates():
+coords = [(25, 40), (102, 88), (14, 36)]
 
-    x = randint(0, 180)
-    y = randint(0, 160)
+x = randint(0, 180)
+y = randint(0, 160)
 
-    for i in Building.arr:
+trigger = 0
 
-        if not Building.arr:
-            count += 1
-            print("arr is empty")
+for i in coords:
+    xMIN = i[0]
+    xMAX = i[0] + 8
 
-        else:
-            x1 = (i-1).xs[0]
-            x2 = (i-1).xs[1]
+    yMIN = i[1]
+    yMAX = i[1] + bType.length
 
-            y1 = (i-1).ys[0]
-            y2 = (i-1).ys[1]
+    if (xMIN <= x <= xMAX):
+        trigger += 1
+    if (yMIN <= y <= yMAX):
+        trigger += 1
 
-            while (x >= x1 and x <= x2):
-                x = randint(0, 180)
+    if trigger == 2:
+        x = randint(0, 180)
+        y = randint(0, 160)
+        print("changing chords")
 
-            while (y >= y1 and y <= y2):
-                y = randint(0, 160)
-
-    return x, y
-
-coords = getCoordinates();
-print(Building.arr)
-print(coords)
+print(x, y)

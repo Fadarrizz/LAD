@@ -1,72 +1,39 @@
 from Classes import *
+from BuildingGenerator import *
 from random import randint
 
-coordsX = []
-coordsY = []
+coords = Building.coords
 
 def getCoordinates(bType):
 
-    x = randint(0, 180)
-    y = randint(0, 160)
+    xBorder = int(180 - bType.width)
+    yBorder = int(160 - bType.length)
 
-    w = bType.width
-    l = bType.length
+    x = randint(0, xBorder)
+    y = randint(0, yBorder)
 
-    count = 0
-
-    for i in Building.arr:
+    for i in coords:
 
         if Building.arr == []:
-            count += 1
-            print("im counting", count)
+            print ("empty arr")
+            break
 
-        else:
-            # lbX = bType.LB[0]
-            # ltX = bType.LT[0]
-            # rtX = bType.RT[0]
-            # rbX = bType.RB[0]
-            #
-            # rbY = bType.LB[1]
-            # ltY = bType.LT[1]
-            # rtY = bType.RT[0]
-            # rbY = bType.RB[0]
+        xMIN = i[1]
+        xMAX = i[1] + i[0].width
 
-            for j in coordsX:
-                x1 = j[0]
-                x2 = j[1]
+        yMIN = i[2]
+        yMAX = i[2] + i[0].length
 
-                for k in coordsY:
-                    y1 = k[0]
-                    y2 = k[1]
+        while True:
 
-                    while True:
-                        if (x1 <= x <= x2):
-                            correct = 1
-                            print("x is not right")
+            if (xMIN <= x <= xMAX and yMIN <= y <= yMAX):
+                print("x and y are not right")
+                x = randint(0, xBorder)
+                y = randint(0, yBorder)
+                print("changing chords")
 
-                            if (y1 <= y <= y2):
-                                print("y is not right")
-                                correct = 1
-                        else:
-                            correct = 0
-                            break
-                    #      and (((x + bType.width) >= x1)
-                    # and ((x + bType.width) <= x2)) and (((y + bType.length) >= y1)
-                    # and ((y + bType.length) <= y2))):
+            else:
+                break
 
-                        if (correct == 1):
-                            x = randint(0, 180)
-                            y = randint(0, 180)
-                            print("new coords chosen ", x, y)
-
-                    # while (((x1 <= x <= x2) and (y1 <= y <= y2)) and (((x + bType.width) >= x1)
-                    # and ((x + bType.width) <= x2)) and (((y + bType.length) >= y1)
-                    # and ((y + bType.length) <= y2))):
-                    #     print ("in while statement")
-                    #     x = randint(0, 180)
-                    #     y = randint(0, 180)
-                    #     print("changed: ", x, y)
-
-    coordsX.append((x, (x + bType.width)))
-    coordsY.append((y, (y + bType.length)))
+    coords.append((bType,x,y))
     return x, y

@@ -2,6 +2,7 @@ class Building(object):
     """Class definition for a house construction"""
     # __metaclass__ = ABCMeta
     arr             = []
+    coords          = []
     width           = 0
     length          = 0
     mtr_clearance   = 0
