@@ -59,14 +59,11 @@ class Maison(Building):
 
 class Waterbody(object):
     """Class definition for a waterbody."""
-    def __init__(self, x, y, width, length, a, b):
+    def __init__(self, x, y, width, length):
         self.x      = x
         self.y      = y
         self.width  = width
         self.length = length
 
-        def a(self):
-            return self.width / 2
-
-        def b(self):
-            return self.length / 2
+        self.a = self.width / 2
+        self.b = self.length / 2

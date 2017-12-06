@@ -15,6 +15,20 @@ ax.yaxis.set_major_locator(loc)
 ax.set_xlim(0, 180)
 ax.set_ylim(0, 160)
 
+# add water to map
+water = Waterbody(100, 88, 80, 72)
+
+# Temp variable with building information
+water = patches.Rectangle((water.x, water.y), water.width,
+        water.length, color='blue')
+
+# Additional map values
+rx, ry  = water.get_xy()
+cx      = rx + water.get_width()/2.0
+cy      = ry + water.get_height()/2.0
+ax.add_artist(water)
+
+
 # empty array
 Building.arr = []
 
@@ -64,7 +78,7 @@ for i in building:
     tempName = name + str(i)
 
     # Create class object and add to array
-    temp = bType(name + str(i), x, y)
+    # temp = bType(name + str(i), x, y)
     Building.arr.append(temp)
 
     # Temp variable with building information
