@@ -2,11 +2,14 @@ from Classes import *
 from coordinates import getCoordinates
 from random import randint
 
+buildingsPlaced = Grid.buildingsPlaced
+coords          = Grid.coords
+
 def buildingGenerator():
     print("Starting building generation")
     # empty array
-    Building.arr = []
-    Building.coords = []
+    buildingsPlaced = []
+    coords = []
 
     # init temp array
     building = []
@@ -56,6 +59,7 @@ def buildingGenerator():
         temp = bType(name+str(count),x,y)
         print("Created", name+str(count),"at", "({},{})".format(x,y))
 
-        Building.arr.append(temp)
+        buildingsPlaced.append(temp)
 
     print("Building generation complete")
+    return buildingsPlaced

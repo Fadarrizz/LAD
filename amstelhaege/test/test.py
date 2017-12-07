@@ -1,27 +1,49 @@
 from random import randint
+from classes import *
 
 coords = [(25, 40), (102, 88), (14, 36)]
 
-x = randint(0, 180)
-y = randint(0, 160)
+xBorder = int(180 - House.width)
+yBorder = int(160 - House.length)
 
-trigger = 0
+x = int(input("give x plz:"))
+x2 = x + House.width
+y = int(input("give y plz:"))
+y2 = y + House.length
 
 for i in coords:
+
     xMIN = i[0]
-    xMAX = i[0] + 8
+    xMAX = i[0] + House.width
+    print("xMIN:", xMIN, "xMAX", xMAX)
 
     yMIN = i[1]
-    yMAX = i[1] + bType.length
+    yMAX = i[1] + House.length
+    print("yMIN:", yMIN, "yMAX:", yMAX)
 
-    if (xMIN <= x <= xMAX):
-        trigger += 1
-    if (yMIN <= y <= yMAX):
-        trigger += 1
+    while True:
+        # if ((xMIN <= x <= xMAX and yMIN <= y <= yMAX) or
+        #     (xMIN <= x <= xMAX and yMIN <= y2 <= yMAX) or
+        #     (xMIN <= x2 <= xMAX and yMIN <= y2 <= yMAX) or
+        #     (xMIN <= x2 <= xMAX and yMIN <= y <= yMAX)):
 
-    if trigger == 2:
-        x = randint(0, 180)
-        y = randint(0, 160)
-        print("changing chords")
+        if ((xMIN < x < xMAX
+        or   xMIN < x2 < xMAX
+        or   x < xMIN < x2
+        or   x < xMAX < x2)
+        and
+            (yMIN < y < yMAX
+        or   yMIN < y2 < yMAX
+        or   y < yMIN < y2
+        or   y < yMAX < y2)):
 
-print(x, y)
+            print("coords not right")
+            x = randint(0, xBorder)
+            x2 = x + House.width
+            y = randint(0, yBorder)
+            y2 = y + House.length
+            print("changing chords")
+
+        else:
+            break
+    print("checked all",x,y,"are good")

@@ -1,8 +1,6 @@
 class Building(object):
     """Class definition for a house construction"""
     # __metaclass__ = ABCMeta
-    arr             = []
-    coords          = []
     width           = 0
     length          = 0
     mtr_clearance   = 0
@@ -20,8 +18,6 @@ class Building(object):
         self.coordinates = [(x,y), (x, (y + self.length)), ((x + self.width),
                         (y + self.length)), ((x + self.width), y)]
 
-    def __repr__(self):
-        return coordinates
 
 class House(Building):
     """Class definition for a detached house."""
@@ -72,3 +68,7 @@ class Waterbody(object):
 
         self.a = self.width / 2
         self.b = self.length / 2
+
+class Grid(Building):
+        buildingsPlaced = []
+        coords          = []

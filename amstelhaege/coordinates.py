@@ -1,22 +1,26 @@
 from Classes import *
 from BuildingGenerator import *
 from random import randint
+import copy
 
-coords = Building.coords
+coords          = Grid.coords
+buildingsPlaced = Grid.buildingsPlaced
 
 def getCoordinates(bType, name, count):
 
     xBorder = int(180 - bType.width)
     yBorder = int(160 - bType.length)
 
-    x = randint(0, xBorder)
+    x  = copy.copy(randint(0, xBorder))
     x2 = x + bType.width
-    y = randint(0, yBorder)
+    y  = copy.copy(randint(0, yBorder))
     y2 = y + bType.length
+
+    count = 0
 
     for i in coords:
 
-        if Building.arr == []:
+        if coords == []:
             print ("empty arr")
             break
 
@@ -28,48 +32,27 @@ def getCoordinates(bType, name, count):
 
         while True:
 
-            if (xMIN <= x <= xMAX and yMIN <= y <= yMAX):
-                print("LB not right, same as",i[0])
-                x = randint(0, xBorder)
+            if ((xMIN < x < xMAX
+            or   xMIN < x2 < xMAX
+            or   x < xMIN < x2
+            or   x < xMAX < x2)
+            and
+                (yMIN < y < yMAX
+            or   yMIN < y2 < yMAX
+            or   y < yMIN < y2
+            or   y < yMAX < y2)):
+
+                print(x,y,"are not right, same as",i[0])
+                x = copy.copy(randint(0, xBorder))
                 x2 = x + bType.width
-                y = randint(0, yBorder)
+                y = copy.copy(randint(0, yBorder))
                 y2 = y + bType.length
                 print("changing chords")
-
-            if (xMIN <= x <= xMAX and yMIN <= y2 <= yMAX):
-                print("LT not right, same as",i[0])
-                x = randint(0, xBorder)
-                x2 = x + bType.width
-                y = randint(0, yBorder)
-                y2 = y + bType.length
-                print("changing chords")
-
-            if (xMIN <= x2 <= xMAX and yMIN <= y2 <= yMAX):
-                print("RT not right, same as",i[0])
-                x = randint(0, xBorder)
-                x2 = x + bType.width
-                y = randint(0, yBorder)
-                y2 = y + bType.length
-                print("changing chords")
-
-            if (xMIN <= x2 <= xMAX and yMIN <= y <= yMAX):
-                print("RB not right, same as",i[0])
-                x = randint(0, xBorder)
-                x2 = x + bType.width
-                y = randint(0, yBorder)
-                y2 = y + bType.length
-                print("changing chords")
-
-
-                    # print("({},{})".format(x,y),"are not right, same as",i[0])
-                    # x = randint(0, xBorder)
-                    # x2 = x + bType.width
-                    # y = randint(0, yBorder)
-                    # y2 = y + bType.length
-                    # print("changing chords")
 
             else:
+                count += 1
                 break
-    print("All corners OK")
+
+    print("checked all",count,"builings")
     coords.append((name+str(count),bType,x,y))
     return x, y
