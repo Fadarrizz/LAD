@@ -10,7 +10,9 @@ def getCoordinates(bType, name, count):
     yBorder = int(160 - bType.length)
 
     x = randint(0, xBorder)
+    x2 = x + bType.width
     y = randint(0, yBorder)
+    y2 = y + bType.length
 
     for i in coords:
 
@@ -20,7 +22,6 @@ def getCoordinates(bType, name, count):
 
         xMIN = i[2]
         xMAX = i[2] + i[1].width
-        # print("x min and max",xMIN, xMAX)
 
         yMIN = i[3]
         yMAX = i[3] + i[1].length
@@ -28,6 +29,12 @@ def getCoordinates(bType, name, count):
         while True:
 
             if (xMIN <= x <= xMAX and yMIN <= y <= yMAX):
+                print("are not right, same as",i[0],
+                        "at ({},{})".format(x,y))
+                x = randint(0, xBorder)
+                y = randint(0, yBorder)
+                print("changing chords")
+            elif (xMIN <= x2 <= xMAX and yMIN <= y2 <= yMAX):
                 print("are not right, same as",i[0],
                         "at ({},{})".format(x,y))
                 x = randint(0, xBorder)
