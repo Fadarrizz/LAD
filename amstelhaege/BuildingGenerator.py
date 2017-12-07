@@ -25,7 +25,8 @@ def buildingGenerator():
     hArr    = ['h'] * h
     bArr    = ['b'] * b
     mArr    = ['m'] * m
-    building.extend(hArr+bArr+mArr)
+    # building.extend(hArr+bArr+mArr)
+    building.extend(mArr+bArr+hArr)
 
     countH = 0
     countB = 0

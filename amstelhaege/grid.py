@@ -16,8 +16,8 @@ def Grid():
     loc = plticker.MultipleLocator(base=intervals)
     ax.xaxis.set_major_locator(loc)
     ax.yaxis.set_major_locator(loc)
-    ax.set_xlim(0, 180)
-    ax.set_ylim(0, 160)
+    ax.set_xlim(0, 100)
+    ax.set_ylim(0, 100)
 
     # add water to map
     water = Waterbody(100, 88, 80, 72)
@@ -41,10 +41,10 @@ def Grid():
         # Add building to map
         ax.add_artist(temp)
         count += 1
-        print("added",count,"to map")
+        print("added",count,"to map",i.coordinates)
         # Show map
-        plt.show()
 
+        # var = input()
 
-
+    plt.show()
 Grid()
