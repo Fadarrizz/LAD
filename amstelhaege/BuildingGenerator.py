@@ -48,13 +48,13 @@ def buildingGenerator():
             count   = countM
 
         # Random coordinates
-        xy = getCoordinates(bType)
+        xy = getCoordinates(bType, name, count)
         x = xy[0]
         y = xy[1]
 
         # Create class object and add to array
-        temp = bType(name+str(count), x, y)
-        print("Created", name+str(count))
+        temp = bType(name+str(count),x,y)
+        print("Created", name+str(count),"at", "({},{})".format(x,y))
 
         Building.arr.append(temp)
 

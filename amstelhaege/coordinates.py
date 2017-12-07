@@ -4,7 +4,7 @@ from random import randint
 
 coords = Building.coords
 
-def getCoordinates(bType):
+def getCoordinates(bType, name, count):
 
     xBorder = int(180 - bType.width)
     yBorder = int(160 - bType.length)
@@ -18,16 +18,18 @@ def getCoordinates(bType):
             print ("empty arr")
             break
 
-        xMIN = i[1]
-        xMAX = i[1] + i[0].width
+        xMIN = i[2]
+        xMAX = i[2] + i[1].width
+        # print("x min and max",xMIN, xMAX)
 
-        yMIN = i[2]
-        yMAX = i[2] + i[0].length
+        yMIN = i[3]
+        yMAX = i[3] + i[1].length
 
         while True:
 
             if (xMIN <= x <= xMAX and yMIN <= y <= yMAX):
-                print("x and y are not right")
+                print("are not right, same as",i[0],
+                        "at ({},{})".format(x,y))
                 x = randint(0, xBorder)
                 y = randint(0, yBorder)
                 print("changing chords")
@@ -35,5 +37,5 @@ def getCoordinates(bType):
             else:
                 break
 
-    coords.append((bType,x,y))
+    coords.append((name+str(count),bType,x,y))
     return x, y
