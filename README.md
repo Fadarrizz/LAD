@@ -17,8 +17,8 @@ These instructions will get you a copy of the project up and running on your loc
 Below you'll find the software that's necessary to run the code.
 
 ```
-* Matplotlib: (http://matplotlib.org/users/installing.html)
-* Atom: (https://atom.io/)
+Matplotlib: (http://matplotlib.org/users/installing.html)
+Atom: (https://atom.io/)
 ```
 
 ### Installing
@@ -37,27 +37,6 @@ Select number of buildings to place
 20, 40 or 60
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Authors
 
