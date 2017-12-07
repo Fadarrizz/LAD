@@ -17,8 +17,8 @@ These instructions will get you a copy of the project up and running on your loc
 Below you'll find the software that's necessary to run the code.
 
 ```
-* [Matplotlib](http://matplotlib.org/users/installing.html)
-* [Atom](https://atom.io/)
+* Matplotlib: (http://matplotlib.org/users/installing.html)
+* Atom: (https://atom.io/)
 ```
 
 ### Installing
@@ -65,7 +65,6 @@ Give an example
 * **Auke Geerts** - [Fadarrizz](https://github.com/Fadarrizz)
 * **Daniel Walters** - [Danprog](https://github.com/Danprog)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## Acknowledgments
 
