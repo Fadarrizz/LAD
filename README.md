@@ -1,4 +1,4 @@
-# Heuristics - amstelhaege
+# Heuristics - Amstelhaege
 
 This code is designed to create housingplan of 3 variations (20, 40 or 60 houses).
 The land, upon which 3 different housetypes can be built, is 160 by 180 meters
@@ -6,12 +6,45 @@ and 20% of its surface includes water.
 
 The objective is to create a design that is the most lucrative, as the price of
 a house inflates with every extra meter of detachment.
-Another objective is to find out what the maximum detached meters a house can have.
+Another objective is to find out what the maximum amount of detached meters that a house can have is.
 
-We will use xxx algorithm to find the best possible outcome for these objectives.
+## Getting Started
 
-*Classes.py contains the placeable object classes*
-*grid.py can be run to initiate the grid, it will ask for which variation of the houseplan it should run.*
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+### Prerequisites
+
+Below you'll find the software that's necessary to run the code.
+
+```
+Matplotlib: (http://matplotlib.org/users/installing.html)
+Atom: (https://atom.io/)
+```
+
+### Installing
+
+A step by step series of examples that tell you have to get a development env running
+
+Create a grid in Matplotlib
+
+```
+python grid.py
+```
+
+Select number of buildings to place
+
+```
+20, 40 or 60
+```
 
 
-By Daniel Walters, Auke Geerts and Leyla Banchaewa.
+## Authors
+
+* **Leyla Bancheawa** - [Nova0125](https://github.com/Nova0125)
+* **Auke Geerts** - [Fadarrizz](https://github.com/Fadarrizz)
+* **Daniel Walters** - [Danprog](https://github.com/Danprog)
+
+
+## Acknowledgments
+
+* Readme template made by [PurpleBooth](https://gist.github.com/PurpleBooth/b24679402957c63ec426)
