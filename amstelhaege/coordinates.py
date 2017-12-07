@@ -29,20 +29,47 @@ def getCoordinates(bType, name, count):
         while True:
 
             if (xMIN <= x <= xMAX and yMIN <= y <= yMAX):
-                print("are not right, same as",i[0],
-                        "at ({},{})".format(x,y))
+                print("LB not right, same as",i[0])
                 x = randint(0, xBorder)
+                x2 = x + bType.width
                 y = randint(0, yBorder)
+                y2 = y + bType.length
                 print("changing chords")
-            elif (xMIN <= x2 <= xMAX and yMIN <= y2 <= yMAX):
-                print("are not right, same as",i[0],
-                        "at ({},{})".format(x,y))
+
+            if (xMIN <= x <= xMAX and yMIN <= y2 <= yMAX):
+                print("LT not right, same as",i[0])
                 x = randint(0, xBorder)
+                x2 = x + bType.width
                 y = randint(0, yBorder)
+                y2 = y + bType.length
                 print("changing chords")
+
+            if (xMIN <= x2 <= xMAX and yMIN <= y2 <= yMAX):
+                print("RT not right, same as",i[0])
+                x = randint(0, xBorder)
+                x2 = x + bType.width
+                y = randint(0, yBorder)
+                y2 = y + bType.length
+                print("changing chords")
+
+            if (xMIN <= x2 <= xMAX and yMIN <= y <= yMAX):
+                print("RB not right, same as",i[0])
+                x = randint(0, xBorder)
+                x2 = x + bType.width
+                y = randint(0, yBorder)
+                y2 = y + bType.length
+                print("changing chords")
+
+
+                    # print("({},{})".format(x,y),"are not right, same as",i[0])
+                    # x = randint(0, xBorder)
+                    # x2 = x + bType.width
+                    # y = randint(0, yBorder)
+                    # y2 = y + bType.length
+                    # print("changing chords")
 
             else:
                 break
-
+    print("All corners OK")
     coords.append((name+str(count),bType,x,y))
     return x, y
