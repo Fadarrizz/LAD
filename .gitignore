@@ -1,2 +1,4 @@
-/LAD/amstelhaege/_pycache_
+amstelhaege/__pycache__/*
+amstelhaege/__pycache__/
 *.pyc
+*.DS_Store
