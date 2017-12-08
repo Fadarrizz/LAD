@@ -13,7 +13,7 @@ def Grid(build):
     # Grid initialization
     fig, ax = plt.subplots()
     plt.axis('scaled')
-    ax.grid(which='major', axis='both', linestyle='-')
+    ax.grid(which='major', axis='both', color ='gray', linestyle='--')
     intervals = 10
 
     loc = plticker.MultipleLocator(base=intervals)
@@ -166,7 +166,7 @@ def GenerateBuildings():
 
 #################################################################################
 
-def addFreespace():
-
-    for i in coords:
-        if bType == Maison
+# def addFreespace():
+#
+#     for i in coords:
+#         if bType == Maison
