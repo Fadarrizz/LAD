@@ -1,6 +1,7 @@
-from Classes import *
+from classes import *
 
-for b in Building.buildingsPlaced:
+build = Building.buildingsPlaced
+for b in build:
     print(b.x)
 
 # for a in buildingsPlaced:

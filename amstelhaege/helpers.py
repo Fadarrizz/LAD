@@ -31,8 +31,8 @@ def Grid(build):
 
     count = 0
 
+    print(build)
     for i in build:
-        print("in for loop")
         # Temp variable with building information
         temp = patches.Rectangle((i.x, i.y), i.width, i.length,
                 facecolor=i.color, edgecolor='black')
@@ -40,7 +40,7 @@ def Grid(build):
         # Add building to map
         ax.add_artist(temp)
         count += 1
-        print("added",count,"to map",i.coordinates)
+        # print("added",count,"to map",i.coordinates)
 
     # Show map
     plt.show()
@@ -72,13 +72,11 @@ def GetCoordinates(bType, name, count):
             yMIN = i[3]
             yMAX = i[3] + i[1].length
 
-            if ((xMIN <= x <= xMAX  or   xMIN <= x2 <= xMAX
-            or   x <= xMIN <= x2    or   x <= xMAX <= x2)
-            and
-                (yMIN <= y <= yMAX  or   yMIN <= y2 <= yMAX
-            or   y <= yMIN <= y2    or   y <= yMAX <= y2)):
+            # freespace = FreespaceOverlap(bType, x, y)
 
-                print(x,y,"are not right, same as",i[0])
+            if Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX) or CheckOverlap(bType, x, y) :
+
+                print(x,y,"are not right, same as",i[0],i[2],i[3])
                 x = randint(0, xBorder)
                 x2 = x + bType.width
                 y = randint(0, yBorder)
@@ -95,6 +93,10 @@ def GetCoordinates(bType, name, count):
 
 def BuildingQueue():
     print("Starting building generation")
+
+    # empty array
+    buildingsPlaced = []
+    coords = []
 
     # init temp array
     building = []
@@ -117,10 +119,6 @@ def BuildingQueue():
 #################################################################################
 
 def BuildingGenerator(building):
-
-    # # empty array
-    # buildingsPlaced = []
-    # coords = []
 
     countH = 0
     countB = 0
@@ -166,7 +164,37 @@ def GenerateBuildings():
 
 #################################################################################
 
-# def addFreespace():
-#
-#     for i in coords:
-#         if bType == Maison
+def Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX):
+
+    if ((xMIN <= x <= xMAX  or   xMIN <= x2 <= xMAX
+    or   x <= xMIN <= x2    or   x <= xMAX <= x2)
+    and
+        (yMIN <= y <= yMAX  or   yMIN <= y2 <= yMAX
+    or   y <= yMIN <= y2    or   y <= yMAX <= y2)):
+        return True
+
+    return False
+
+#################################################################################
+
+def CheckOverlap(a, x, y):
+    for b in buildingsPlaced:
+        if FreespaceOverlap(a, b, x, y) == True:
+            return False
+    return True
+
+#################################################################################
+
+def FreespaceOverlap(a, b, x, y):
+    if ((x + a.width + a.mtr_clearance) < b.x) and (b.x - b.mtr_clearance > x + a.width + a.mtr_clearance):
+        return False
+    if (x - a.mtr_clearance) > (b.x + b.width) and (b.x + b.width + b.mtr_clearance < x - a.mtr_clearance):
+        return False
+    if ((y + a.length + a.mtr_clearance) < b.y) and (b.y + b.mtr_clearance > y + a.length + a.mtr_clearance):
+        return False
+    if (y - a.mtr_clearance) > (b.y + b.length) and (b.y + b.length + b.mtr_clearance < y - a.mtr_clearance):
+        return False
+
+    return True
+
+#################################################################################
