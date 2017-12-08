@@ -1,4 +1,4 @@
-from Classes import *
+from classes import *
 from random import randint
 
 coordsX = []

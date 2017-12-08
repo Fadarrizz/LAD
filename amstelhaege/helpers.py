@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
 from random import randint
-from Classes import *
+from classes import *
 
 buildingsPlaced = Building.buildingsPlaced
 coords          = Building.coords
