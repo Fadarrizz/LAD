@@ -28,7 +28,7 @@ class House(Building):
     mtr_clearance   = 2
     price           = 285000
     percentage      = 1.04
-    color           = 'green'
+    color           = '#8ca861'
 
     # def calc_value(self, free_space):
     #     self.free_space = xxxx
@@ -41,7 +41,7 @@ class Bungalow(Building):
     mtr_clearance   = 3
     price           = 399000
     percentage      = 1.04
-    color           = 'purple'
+    color           = '#E5B181'
 
     # def calc_value(self, free_space):
     #     self.free_space = xxxx
@@ -54,7 +54,7 @@ class Maison(Building):
     mtr_clearance   = 6
     price           = 610000
     percentage      = 1.06
-    color           = 'red'
+    color           = '#DE6B48'
 
     # def calc_value(self, free_space):
     #     self.free_space = xxxx
@@ -62,6 +62,7 @@ class Maison(Building):
 
 class Waterbody(object):
     """Class definition for a waterbody."""
+    color           = "#7DBBC3"
     def __init__(self, x, y, width, length):
         self.x      = x
         self.y      = y

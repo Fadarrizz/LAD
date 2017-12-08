@@ -8,26 +8,34 @@ buildingsPlaced = Building.buildingsPlaced
 coords          = Building.coords
 
 def Grid(build):
+    """Places requested houses on grid"""
 
     # Grid initialization
     fig, ax = plt.subplots()
     plt.axis('scaled')
     ax.grid(which='major', axis='both', linestyle='-')
     intervals = 10
+
     loc = plticker.MultipleLocator(base=intervals)
     ax.xaxis.set_major_locator(loc)
     ax.yaxis.set_major_locator(loc)
-    ax.set_xlim(0, 100)
-    ax.set_ylim(0, 100)
+    ax.set_xlim(0, 180)
+    ax.set_ylim(0, 160)
+    ax.set_axisbelow(True)
+
+    water = Waterbody(100, 88, 80, 72)
+
+    water = patches.Rectangle((water.x, water.y), water.width,
+            water.length, color=Waterbody.color)
+    ax.add_artist(water)
 
     count = 0
-    print(buildingsPlaced)
 
     for i in build:
         print("in for loop")
         # Temp variable with building information
         temp = patches.Rectangle((i.x, i.y), i.width, i.length,
-                color=i.color, edgecolor=None)
+                facecolor=i.color, edgecolor='black')
 
         # Add building to map
         ax.add_artist(temp)
@@ -41,8 +49,8 @@ def Grid(build):
 
 def GetCoordinates(bType, name, count):
 
-    xBorder = int(100 - bType.width)
-    yBorder = int(100 - bType.length)
+    xBorder = int(180 - bType.width)
+    yBorder = int(160 - bType.length)
 
     x  = randint(0, xBorder)
     x2 = x + bType.width
@@ -153,5 +161,12 @@ def BuildingGenerator(building):
 
 #################################################################################
 
-def MakeGrid():
-    Grid(BuildingGenerator(BuildingQueue()))
+def GenerateBuildings():
+    BuildingGenerator(BuildingQueue())
+
+#################################################################################
+
+def addFreespace():
+
+    for i in coords:
+        if bType == Maison
