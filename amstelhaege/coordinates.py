@@ -1,4 +1,4 @@
-from classes import *
+from Classes import *
 from BuildingGenerator import *
 from random import randint
 import copy

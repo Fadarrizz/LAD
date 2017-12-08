@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
-from classes import *
+from Classes import *
 from BuildingGenerator import *
 
 buildingsPlaced = Grid.buildingsPlaced
