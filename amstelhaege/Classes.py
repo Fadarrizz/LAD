@@ -3,6 +3,8 @@ class Building(object):
     # __metaclass__ = ABCMeta
     buildingsPlaced = []
     coords          = []
+    neighbors       = []
+    house_type      = 0
     width           = 0
     length          = 0
     mtr_clearance   = 0
@@ -23,6 +25,7 @@ class Building(object):
 
 class House(Building):
     """Class definition for a detached house."""
+    house_type      = 'House'
     width           = 8
     length          = 8
     mtr_clearance   = 2
@@ -36,6 +39,7 @@ class House(Building):
 
 class Bungalow(Building):
     """Class definition for a detached house."""
+    house_type      = 'Bungalow'
     width           = 10
     length          = 7.5
     mtr_clearance   = 3
@@ -49,6 +53,7 @@ class Bungalow(Building):
 
 class Maison(Building):
     """Class definition for a detached house."""
+    house_type      = 'Maison'
     width           = 11
     length          = 10.5
     mtr_clearance   = 6

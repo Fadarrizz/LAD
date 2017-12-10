@@ -85,7 +85,7 @@ def GetCoordinates(bType, name, count):
                 invalid = True
                 break
 
-    print("checked all",count,"builings")
+    print("checked all",count,"buildings")
     coords.append((name+str(count),bType,x,y))
     return x,y
 
@@ -179,9 +179,11 @@ def Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX):
 
 def CheckOverlap(a, x, y):
     for b in buildingsPlaced:
-        if FreespaceOverlap(a, b, x, y) == True:
-            return False
-    return True
+        if (a == b):
+            pass
+        elif FreespaceOverlap(a, b, x, y) == True:
+            return True
+    return False
 
 #################################################################################
 
@@ -199,9 +201,17 @@ def FreespaceOverlap(a, b, x, y):
 
 #################################################################################
 
-def nearestHouse():
+def getNeighbours():
+    #empty array of neighbours
+    neighbours = Building.neighbours
+    free_meters = 0
+    # add counter
+    count = 0
     # iterate over every house placed
     for this_house in buildingsPlaced:
+        count += 1
+        neighbours = []
+        print("round: ", count)
         for neighbor in buildingsPlaced:
             # coordinates of the x and y ranges of relative house
             x = this_house.x
@@ -233,3 +243,24 @@ def nearestHouse():
                     if (y > (neighbor.y + neighbor.length)):
                         free_meters = x - (neighbor.y + neighbor.length)
                     print("top or bottom distance:", free_meters)
+
+            #add each neighboring house with its distance
+            neighbours.append((neighbor.house_type, free_meters))
+        print(neighbours)
+
+
+        ###code om voor elke free_meters te vergelijken of dit de kleinste afstand is in vergelijking tot de rest
+
+        # global nearest_house
+        # for i, j in enumerate(neighbours):
+        #     house = j[0]
+        #     distance = j[1]
+        #
+        #     next_pair = (i+1)
+        #     next_house = next_pair[0]
+        #     new_distance = (j+1)[1]
+        #
+        #     if distance > new_distance:
+        #         nearest_house = next_house
+
+        print(nearest_house)
