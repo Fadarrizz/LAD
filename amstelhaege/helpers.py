@@ -198,3 +198,38 @@ def FreespaceOverlap(a, b, x, y):
     return True
 
 #################################################################################
+
+def nearestHouse():
+    # iterate over every house placed
+    for this_house in buildingsPlaced:
+        for neighbor in buildingsPlaced:
+            # coordinates of the x and y ranges of relative house
+            x = this_house.x
+            xMAX = this_house.x + this_house.width
+
+            y = this_house.y
+            yMAX = this_house.y + this_house.length
+
+            # skip the relative house
+            if (this_house.name == neighbor.name):
+                pass
+
+            else:
+                #LB or LT in y-axis range
+                if (y <= neighbor.y <= yMAX) or (y <= (neighbor.y + neighbor.length) <= yMAX):
+                    #neighbor on right side
+                    if (xMAX < neighbor.x):
+                        free_meters = neighbor.x - xMAX
+                    #neighbor on left side
+                    elif(x > (neighbor.x + neighbor.width)):
+                        free_meters = x - (neighbor.x + neighbor.width)
+                    print("left or right distance:", free_meters)
+
+                if (x <= neighbor.x <= xMAX) or (x <= neighbor.x + (neighbor.width) <= xMAX):
+                    #neighbor on top
+                    if (yMAX < neighbor.y):
+                        free_meters = neighbor.y - yMAX
+                    #neighbor bottom
+                    if (y > (neighbor.y + neighbor.length)):
+                        free_meters = x - (neighbor.y + neighbor.length)
+                    print("top or bottom distance:", free_meters)
