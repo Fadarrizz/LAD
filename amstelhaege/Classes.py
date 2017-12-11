@@ -3,7 +3,7 @@ class Building(object):
     # __metaclass__ = ABCMeta
     buildingsPlaced = []
     coords          = []
-    neighbors       = []
+    neighbours       = []
     house_type      = 0
     width           = 0
     length          = 0

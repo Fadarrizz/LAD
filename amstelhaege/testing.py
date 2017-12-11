@@ -17,3 +17,15 @@ for b in build:
 #         return True
 #     else:
 #         return False
+
+x = [1,2,3]
+
+for i in x:
+    if i > 2:
+        if i == 3:
+            print(i,'= 3')
+            pass
+        print(i,'> 2')
+    else:
+        print('lol')
+    print('end')
