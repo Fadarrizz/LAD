@@ -212,7 +212,7 @@ def getNeighbours():
         count += 1
         neighbours = []
         print("round: ", count)
-        for neighbor in buildingsPlaced:
+        for neighbour in buildingsPlaced:
             # coordinates of the x and y ranges of relative house
             x = this_house.x
             xMAX = this_house.x + this_house.width
@@ -221,31 +221,44 @@ def getNeighbours():
             yMAX = this_house.y + this_house.length
 
             # skip the relative house
-            if (this_house.name == neighbor.name):
+            if (this_house.name == neighbour.name):
                 pass
 
             else:
                 #LB or LT in y-axis range
-                if (y <= neighbor.y <= yMAX) or (y <= (neighbor.y + neighbor.length) <= yMAX):
-                    #neighbor on right side
-                    if (xMAX < neighbor.x):
-                        free_meters = neighbor.x - xMAX
-                    #neighbor on left side
-                    elif(x > (neighbor.x + neighbor.width)):
-                        free_meters = x - (neighbor.x + neighbor.width)
+                if (y <= neighbour.y <= yMAX) or (y <= (neighbour.y + neighbour.length) <= yMAX):
+                    #neighbour on right side
+                    if (xMAX < neighbour.x):
+                        free_meters = neighbour.x - xMAX
+                    #neighbour on left side
+                    elif(x > (neighbour.x + neighbour.width)):
+                        free_meters = x - (neighbour.x + neighbour.width)
                     print("left or right distance:", free_meters)
 
-                elif (x <= neighbor.x <= xMAX) or (x <= neighbor.x + (neighbor.width) <= xMAX):
-                    #neighbor on top
-                    if (yMAX < neighbor.y):
-                        free_meters = neighbor.y - yMAX
-                    #neighbor bottom
-                    elif (y > (neighbor.y + neighbor.length)):
-                        free_meters = x - (neighbor.y + neighbor.length)
+                elif (x <= neighbour.x <= xMAX) or (x <= neighbour.x + (neighbour.width) <= xMAX):
+                    #neighbour on top
+                    if (yMAX < neighbour.y):
+                        free_meters = neighbour.y - yMAX
+                    #neighbour bottom
+                    elif (y > (neighbour.y + neighbour.length)):
+                        free_meters = x - (neighbour.y + neighbour.length)
                     print("top or bottom distance:", free_meters)
 
-            #add each neighboring house with its distance
-            neighbours.append((neighbor.house_type, free_meters))
+                #diagonal check bottom left
+            elif (y > (neighbour.y + neighbour.length)) and (x > (neighbour.x neighbour.width)):
+                    a = x - (neighbour.x + neighbour.width)
+                    b = y - (neighbour.y + neighbour.length)
+                    c_square = (a**2) + (b**2)
+                    free_meters = math.sqrt(c_square)
+                #diagonal check bottom right
+            elif (y > (neighbour.y + neighbour.length)) and (xMAX < neighbour.x):
+                    a = x - (neighbour.x + neighbour.width)
+                    b = y - (neighbour.y + neighbour.length)
+                    c_square = (a**2) + (b**2)
+                    free_meters = math.sqrt(c_square)
+
+            #add each neighbouring house with its distance
+            neighbours.append((neighbour.house_type, free_meters))
         print(neighbours)
 
 
