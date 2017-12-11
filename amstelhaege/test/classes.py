@@ -1,6 +1,7 @@
 class Building(object):
 
-    arr             = []
+    waterPlaced     = []
+    coords          = []
     width           = 0
     length          = 0
     mtr_clearance   = 0
@@ -19,10 +20,16 @@ class Building(object):
     def __repr__(self):
         return coordinates
 
-class House(Building):
-    """Class definition for a detached house."""
-    width           = 8
-    length          = 8
-    mtr_clearance   = 2
-    price           = 285000
-    percentage      = 1.04
+class Waterbody(object):
+    """Class definition for a waterbody."""
+    width = 40
+    length = 36
+    color           = "#7DBBC3"
+    # def __init__(self, x, y, width, length):
+    #     self.x      = x
+    #     self.y      = y
+    #     self.width  = width
+    #     self.length = length
+    #
+    #     self.a = self.width / 2
+    #     self.b = self.length / 2

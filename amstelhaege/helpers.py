@@ -235,12 +235,12 @@ def getNeighbours():
                         free_meters = x - (neighbor.x + neighbor.width)
                     print("left or right distance:", free_meters)
 
-                if (x <= neighbor.x <= xMAX) or (x <= neighbor.x + (neighbor.width) <= xMAX):
+                elif (x <= neighbor.x <= xMAX) or (x <= neighbor.x + (neighbor.width) <= xMAX):
                     #neighbor on top
                     if (yMAX < neighbor.y):
                         free_meters = neighbor.y - yMAX
                     #neighbor bottom
-                    if (y > (neighbor.y + neighbor.length)):
+                    elif (y > (neighbor.y + neighbor.length)):
                         free_meters = x - (neighbor.y + neighbor.length)
                     print("top or bottom distance:", free_meters)
 
