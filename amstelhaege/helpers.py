@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
+import math as math
 from random import randint
 from classes import *
 
@@ -208,6 +209,13 @@ def getNeighbours():
         count += 1
         neighbours = []
         print("round: ", count)
+<<<<<<< HEAD
+=======
+        for neighbour in buildingsPlaced:
+            # coordinates of the x and y ranges of relative house
+            x = this_house.x
+            xMAX = this_house.x + this_house.width
+>>>>>>> b45507ab7a663cef74acc4649068aa6b70c99fed
 
         # coordinates of the x and y ranges of relative house
         x = this_house.x
@@ -217,6 +225,12 @@ def getNeighbours():
 
         print(Neighbours(x, xMAX, y, yMAX, neighbours, this_house))
 
+<<<<<<< HEAD
+=======
+            # skip the relative house
+            if (this_house.name == neighbour.name):
+                pass
+>>>>>>> b45507ab7a663cef74acc4649068aa6b70c99fed
 
 #################################################################################
 
@@ -236,6 +250,7 @@ def Neighbours(x, xMAX, y, yMAX, neighbours, this_house):
                 free_meters = FreemetersUpOrDown(y,yMAX,x,xMAX,nY,nX,nL,nW)
                 print("top or bottom distance:", free_meters)
             else:
+<<<<<<< HEAD
                 free_meters = FreemetersLeftOrRight(y,yMAX,x,xMAX,nY,nX,nL,nW)
                 print("left or right distance:", free_meters)
 
@@ -283,6 +298,43 @@ def NearestHouse(neighbours):
     smallestDistance = 0
     for neighbour in neighbours:
 
+=======
+                #LB or LT in y-axis range
+                if (y <= neighbour.y <= yMAX) or (y <= (neighbour.y + neighbour.length) <= yMAX):
+                    #neighbour on right side
+                    if (xMAX < neighbour.x):
+                        free_meters = neighbour.x - xMAX
+                    #neighbour on left side
+                    elif(x > (neighbour.x + neighbour.width)):
+                        free_meters = x - (neighbour.x + neighbour.width)
+                    print("left or right distance:", free_meters)
+
+                elif (x <= neighbour.x <= xMAX) or (x <= neighbour.x + (neighbour.width) <= xMAX):
+                    #neighbour on top
+                    if (yMAX < neighbour.y):
+                        free_meters = neighbour.y - yMAX
+                    #neighbour bottom
+                    elif (y > (neighbour.y + neighbour.length)):
+                        free_meters = x - (neighbour.y + neighbour.length)
+                    print("top or bottom distance:", free_meters)
+
+                #diagonal check bottom left
+            elif (y > (neighbour.y + neighbour.length)) and (x > (neighbour.x neighbour.width)):
+                    a = x - (neighbour.x + neighbour.width)
+                    b = y - (neighbour.y + neighbour.length)
+                    c_square = (a**2) + (b**2)
+                    free_meters = math.sqrt(c_square)
+                #diagonal check bottom right
+            elif (y > (neighbour.y + neighbour.length)) and (xMAX < neighbour.x):
+                    a = x - (neighbour.x + neighbour.width)
+                    b = y - (neighbour.y + neighbour.length)
+                    c_square = (a**2) + (b**2)
+                    free_meters = math.sqrt(c_square)
+
+            #add each neighbouring house with its distance
+            neighbours.append((neighbour.house_type, free_meters))
+        print(neighbours)
+>>>>>>> b45507ab7a663cef74acc4649068aa6b70c99fed
 
 
         ###code om voor elke free_meters te vergelijken of dit de kleinste afstand is in vergelijking tot de rest

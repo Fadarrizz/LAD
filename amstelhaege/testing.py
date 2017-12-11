@@ -18,14 +18,15 @@ for b in build:
 #     else:
 #         return False
 
-x = [1,2,3]
-
-for i in x:
-    if i > 2:
-        if i == 3:
-            print(i,'= 3')
-            pass
-        print(i,'> 2')
-    else:
-        print('lol')
-    print('end')
+    #diagonal check bottom left
+elif (y > (neighbour.y + neighbour.length)) and (x > (neighbour.x neighbour.width)):
+        a = x - (neighbour.x + neighbour.width)
+        b = y - (neighbour.y + neighbour.length)
+        c_square = (a**2) + (b**2)
+        free_meters = math.sqrt(c_square)
+    #diagonal check bottom right
+elif (y > (neighbour.y + neighbour.length)) and (xMAX < neighbour.x):
+        a = x - (neighbour.x + neighbour.width)
+        b = y - (neighbour.y + neighbour.length)
+        c_square = (a**2) + (b**2)
+        free_meters = math.sqrt(c_square)
