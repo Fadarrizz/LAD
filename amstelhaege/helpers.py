@@ -46,8 +46,8 @@ def Grid(build, variant, amount, totalScore):
     ax.set_xlim(0, 180)
     ax.set_ylim(0, 160)
     ax.set_axisbelow(True)
-    plt.suptitle(variant)
-    plt.title(str(amount) + ' buildings - score: € %.2f ' + str(totalScore))
+    plt.suptitle(variant + ' - ' + str(amount) + ' buildings')
+    plt.title('score: ${:,.2f}'.format(totalScore))
 
     water = Waterbody(100, 88, 80, 72)
 
@@ -182,11 +182,10 @@ def GenerateBuildings():
 
 def Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX):
 
-    if ((xMIN <= x <= xMAX  or   xMIN <= x2 <= xMAX
-    or   x <= xMIN <= x2    or   x <= xMAX <= x2)
-    and
-        (yMIN <= y <= yMAX  or   yMIN <= y2 <= yMAX
-    or   y <= yMIN <= y2    or   y <= yMAX <= y2)):
+    if ((xMIN <= x <= xMAX  or   xMIN <= x2 <= xMAX) or \
+        (x <= xMIN <= x2    or   x <= xMAX <= x2)) and \
+       ((yMIN <= y <= yMAX  or   yMIN <= y2 <= yMAX) or \
+        (y <= yMIN <= y2    or   y <= yMAX <= y2)):
         return True
     return False
 
@@ -242,7 +241,7 @@ def TotalScore():
         thisScore = GetScore(thisHouse, smallestDistance)
         print(thisScore)
         score += thisScore
-        # score = '?'
+        # score = 0
     return score
 
 #################################################################################
@@ -264,10 +263,10 @@ def DistanceToNeighbours(x, xMAX, y, yMAX, thisHouse):
         else:
             print("neighbour:", nX, nY, nW, nL)
             if Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW) == 0:
-                freeMeters = FreemetersLeftOrRight(y,yMAX,x,xMAX,nY,nX,nL,nW)
+                freeMeters = FreemetersLeftOrRight(x,xMAX,nX,nW)
                 print("right or left:", freeMeters)
             elif Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW) == 1:
-                freeMeters = FreemetersUpOrDown(y,yMAX,x,xMAX,nY,nX,nL,nW)
+                freeMeters = FreemetersUpOrDown(y,yMAX,nY,nL)
                 print("top or bottom:", freeMeters)
             else:
                 if FreemetersDiagonal(y, nY,nL) == 0:
@@ -291,7 +290,7 @@ def Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW):
 
 #################################################################################
 
-def FreemetersLeftOrRight(y,yMAX,x,xMAX,nY,nX,nL,nW):
+def FreemetersLeftOrRight(x,xMAX,nX,nW):
     #neighbour on right side
     if (xMAX < nX):
         freeMeters = nX - xMAX
@@ -307,14 +306,16 @@ def FreemetersLeftOrRight(y,yMAX,x,xMAX,nY,nX,nL,nW):
 
 #################################################################################
 
-def FreemetersUpOrDown(y,yMAX,x,xMAX,nY,nX,nL,nW):
+def FreemetersUpOrDown(y,yMAX,nY,nL):
     #neighbour on top
     if (yMAX < nY):
         freeMeters = nY - yMAX
+        print("top side:", freeMeters)
         return freeMeters
     #neighbour bottom
     elif (y > (nY + nL)):
         freeMeters = y - (nY + nL)
+        print("bottom side:", freeMeters)
         return freeMeters
 
 #################################################################################
@@ -332,16 +333,16 @@ def FreemetersDiagonalBottom(y, x, nY,nL,nX,nW,yMAX,xMAX):
     if (x > (nX + nW)):
         a = x - (nX + nW)
         b = y - (nY + nL)
-        c_square = (a**2) + (b**2)
-        freeMeters = math.sqrt(c_square)
+        cSquare = (a**2) + (b**2)
+        freeMeters = math.sqrt(cSquare)
         print("bottom left",freeMeters)
         return freeMeters
     #diagonal check bottom right
     if (xMAX < nX):
         a = xMAX - nX
         b = yMAX - nY
-        c_square = (a**2) + (b**2)
-        freeMeters = math.sqrt(c_square)
+        cSquare = (a**2) + (b**2)
+        freeMeters = math.sqrt(cSquare)
         print("bottom right:",freeMeters)
         return freeMeters
 
@@ -350,18 +351,18 @@ def FreemetersDiagonalBottom(y, x, nY,nL,nX,nW,yMAX,xMAX):
 def FreemetersDiagonalTop(y, x, nY,nL,nX,nW,yMAX,xMAX):
     #diagonal check top left
     if (x > (nX + nW)):
-        a = x - (nX + nW)
-        b = y - (nY + nL)
-        c_square = (a**2) + (b**2)
-        freeMeters = math.sqrt(c_square)
+        a = x + (nX + nW)
+        b = y + (nY + nL)
+        cSquare = (a**2) + (b**2)
+        freeMeters = math.sqrt(cSquare)
         print("top left:",freeMeters)
         return freeMeters
     #diagonal check top right
     if (xMAX < nX):
-        a = xMAX - nX
-        b = yMAX - nY
-        c_square = (a**2) + (b**2)
-        freeMeters = math.sqrt(c_square)
+        a = xMAX + nX
+        b = yMAX + nY
+        cSquare = (a**2) + (b**2)
+        freeMeters = math.sqrt(cSquare)
         print("top right:",freeMeters)
         return freeMeters
 
@@ -372,23 +373,11 @@ def GetSmallestDistance(distances):
     smallestDistance = min(float(distance) for distance in distances)
     return smallestDistance
 
-     ###code om voor elke freeMeters te vergelijken of dit de kleinste afstand is in vergelijking tot de rest
-
-            # global nearest_house
-            # for i, j in enumerate(neighbours):
-            #     house = j[0]
-            #     distance = j[1]
-            #
-            #     next_pair = (i+1)
-            #     next_house = next_pair[0]
-            #     new_distance = (j+1)[1]
-            #
-            #     if distance > new_distance:
-            #         nearest_house = next_house
-
 #################################################################################
 
 def GetScore(bType, smallestDistance):
     value = bType.price + (((smallestDistance - bType.mtr_clearance) * \
             bType.percentage) * bType.price)
     return value
+
+#################################################################################
