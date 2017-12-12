@@ -4,3 +4,6 @@ from helpers import *
 
 Grid(BuildingGenerator(BuildingQueue()))
 getNeighbours()
+
+# Show map
+plt.show()
