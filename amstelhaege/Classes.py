@@ -3,7 +3,7 @@ class Building(object):
     # __metaclass__ = ABCMeta
     buildingsPlaced = []
     coords          = []
-    neighbours       = []
+    GetScore        = []
     house_type      = 0
     width           = 0
     length          = 0
@@ -30,7 +30,7 @@ class House(Building):
     length          = 8
     mtr_clearance   = 2
     price           = 285000
-    percentage      = 1.04
+    percentage      = 0.03
     color           = '#8ca861'
 
     # def calc_value(self, free_space):
@@ -44,7 +44,7 @@ class Bungalow(Building):
     length          = 7.5
     mtr_clearance   = 3
     price           = 399000
-    percentage      = 1.04
+    percentage      = 0.04
     color           = '#E5B181'
 
     # def calc_value(self, free_space):
@@ -58,7 +58,7 @@ class Maison(Building):
     length          = 10.5
     mtr_clearance   = 6
     price           = 610000
-    percentage      = 1.06
+    percentage      = 0.06
     color           = '#DE6B48'
 
     # def calc_value(self, free_space):
