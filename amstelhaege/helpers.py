@@ -94,7 +94,8 @@ def GetCoordinates(bType, name, count):
             yMAX = i[3] + i[1].length   # y coodinate + length
 
             if Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX) or \
-               CheckFreespaceOverlap(bType, x, y):
+               CheckFreespaceOverlap(bType, x, y) or \
+               WaterOverlap(x, y, x2, y2):
 
                 print(x,y,"are not right, same as",i[0],i[2],i[3])
                 x = randint(0, xBorder)
@@ -203,18 +204,35 @@ def CheckFreespaceOverlap(a, x, y):
 
 def FreespaceOverlap(a, b, x, y):
     if ((x + a.width + a.mtr_clearance) < b.x) and \
-        (b.x - b.mtr_clearance > x + a.width + a.mtr_clearance):
+        ((b.x - b.mtr_clearance) > (x + a.width + a.mtr_clearance)):
         return False
     if (x - a.mtr_clearance) > (b.x + b.width) and \
-        (b.x + b.width + b.mtr_clearance < x - a.mtr_clearance):
+        ((b.x + b.width + b.mtr_clearance) < (x - a.mtr_clearance)):
         return False
     if ((y + a.length + a.mtr_clearance) < b.y) and \
-        (b.y + b.mtr_clearance > y + a.length + a.mtr_clearance):
+        (b.y + b.mtr_clearance > (y + a.length + a.mtr_clearance)):
         return False
     if (y - a.mtr_clearance) > (b.y + b.length) and \
-        (b.y + b.length + b.mtr_clearance < y - a.mtr_clearance):
+        ((b.y + b.length + b.mtr_clearance) < (y - a.mtr_clearance)):
         return False
     return True
+
+#################################################################################
+
+def WaterOverlap(x, y, x2, y2):
+    water = Waterbody(100, 88, 80, 72)
+    waterX = water.x
+    waterY = water.y
+    waterWidth = water.width
+    waterLength = water.length
+
+    if (waterX < x < (waterX + waterWidth) or \
+        waterX < x2 < (waterX + waterWidth)) and \
+        (waterY < y < (waterY + waterLength) or \
+        waterY < y2 < (waterY + waterLength)):
+        return True
+
+    return False
 
 #################################################################################
 
@@ -283,9 +301,17 @@ def Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW):
     if (y <= nY <= yMAX) or \
        (y <= (nY + nL) <= yMAX):
        return 0
-    # bottom or top check
-    elif (x <= nX <= xMAX) or \
+    # bottom/top check
+    if (x <= nX <= xMAX) or \
        (x <= (nX + nW) <= xMAX):
+       return 1
+    # left/right check from neighbour perspective
+    if (nY <= y <= (nY + nL)) or \
+       (nY <= yMAX <= (nY + nL)):
+       return 0
+    # bottom/top check from neighbour perspective
+    if (nX <= x <= (nX + nW)) or \
+       (nX <= xMAX <= (nX + nW)):
        return 1
 
 #################################################################################
