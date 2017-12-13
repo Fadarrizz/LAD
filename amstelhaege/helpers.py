@@ -69,6 +69,57 @@ def Grid(build, variant, amount, totalScore):
 
 #################################################################################
 
+<<<<<<< HEAD
+=======
+def GetCoordinates(bType, name, count):
+
+    xBorder = int(180 - bType.width)
+    yBorder = int(160 - bType.length)
+
+    x  = randint(0, xBorder)
+    x2 = x + bType.width
+    y  = randint(0, yBorder)
+    y2 = y + bType.length
+
+    invalid = True
+
+    while invalid:
+        invalid = False
+
+        if coords == []:
+            while WaterOverlap(x, y, x2, y2):
+                x = randint(0, xBorder)
+                x2 = x + bType.width
+                y = randint(0, yBorder)
+                y2 = y + bType.length
+
+        for i in coords:
+
+            xMIN = i[2]                 # x coordinate
+            xMAX = i[2] + i[1].width    # x coordinate + width
+            yMIN = i[3]                 # y coordinate
+            yMAX = i[3] + i[1].length   # y coodinate + length
+
+            if Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX) or \
+               CheckFreespaceOverlap(bType, x, y) or \
+               WaterOverlap(x, y, x2, y2):
+
+                print(x,y,"are not right, same as",i[0],i[2],i[3])
+                x = randint(0, xBorder)
+                x2 = x + bType.width
+                y = randint(0, yBorder)
+                y2 = y + bType.length
+                print("changing chords")
+                invalid = True
+                break
+
+    print("checked all",count,"buildings")
+    coords.append((name+str(count),bType,x,y))
+    return x,y
+
+#################################################################################
+
+>>>>>>> 0a735a27b71f08abfb2145b7388225f83acb295a
 def BuildingQueue(amount):
     print("Starting building generation")
 
