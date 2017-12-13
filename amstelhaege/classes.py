@@ -1,3 +1,7 @@
+class cs_Grid (object):
+    xMAX = 180
+    yMAX = 160
+
 class Building(object):
     """Class definition for a house construction"""
     # __metaclass__ = ABCMeta
@@ -21,7 +25,6 @@ class Building(object):
         self.RB = ((x + self.width), y)
         self.coordinates = [(x,y), (x, (y + self.length)), ((x + self.width),
                         (y + self.length)), ((x + self.width), y)]
-
 
 class House(Building):
     """Class definition for a detached house."""

@@ -44,8 +44,8 @@ def Grid(build, variant, amount, totalScore):
     loc = plticker.MultipleLocator(base=intervals)
     ax.xaxis.set_major_locator(loc)
     ax.yaxis.set_major_locator(loc)
-    ax.set_xlim(0, 180)
-    ax.set_ylim(0, 160)
+    ax.set_xlim(0, cs_Grid.xMAX)
+    ax.set_ylim(0, cs_Grid.yMAX)
     ax.set_axisbelow(True)
     plt.suptitle(variant + ' - ' + str(amount) + ' buildings')
     plt.title('score: ${:,.2f}'.format(totalScore))
@@ -135,8 +135,8 @@ def BuildingGenerator(building):
 
 def GetCoordinates(bType, name, count):
 
-    xBorder = int(180 - bType.width)
-    yBorder = int(160 - bType.length)
+    xBorder = int(cs_Grid.xMAX - bType.width)
+    yBorder = int(cs_Grid.yMAX - bType.length)
 
     x  = randint(0, xBorder)
     x2 = x + bType.width
