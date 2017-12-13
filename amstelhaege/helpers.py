@@ -12,9 +12,9 @@ coords          = Building.coords
 
 def Amount():
     amount = int(input("How many buildings? (20, 40 or 60) \n"))
-    # while amount != 20 and amount != 40 and amount != 60:
-    #     print("Please provide 20, 40 or 60")
-    #     amount = int(input("How many buildings? (20, 40 or 60) \n"))
+    while amount != 20 and amount != 40 and amount != 60:
+        print("Please provide 20, 40 or 60")
+        amount = int(input("How many buildings? (20, 40 or 60) \n"))
     return amount
 
 #################################################################################
@@ -29,6 +29,7 @@ def Variant(amount):
     else:
         variant = "Amstelhaege"
     return variant
+
 #################################################################################
 
 def Grid(build, variant, amount, totalScore):
@@ -65,50 +66,6 @@ def Grid(build, variant, amount, totalScore):
 
     # # Show map
     # plt.show()
-
-#################################################################################
-
-def GetCoordinates(bType, name, count):
-
-    xBorder = int(180 - bType.width)
-    yBorder = int(160 - bType.length)
-
-    x  = randint(0, xBorder)
-    x2 = x + bType.width
-    y  = randint(0, yBorder)
-    y2 = y + bType.length
-
-    invalid = True
-
-    while invalid:
-        invalid = False
-        for i in coords:
-
-            if coords == []:
-                print ("empty arr")
-                break
-
-            xMIN = i[2]                 # x coordinate
-            xMAX = i[2] + i[1].width    # x coordinate + width
-            yMIN = i[3]                 # y coordinate
-            yMAX = i[3] + i[1].length   # y coodinate + length
-
-            if Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX) or \
-               CheckFreespaceOverlap(bType, x, y) or \
-               WaterOverlap(x, y, x2, y2):
-
-                print(x,y,"are not right, same as",i[0],i[2],i[3])
-                x = randint(0, xBorder)
-                x2 = x + bType.width
-                y = randint(0, yBorder)
-                y2 = y + bType.length
-                print("changing chords")
-                invalid = True
-                break
-
-    print("checked all",count,"buildings")
-    coords.append((name+str(count),bType,x,y))
-    return x,y
 
 #################################################################################
 
@@ -176,13 +133,62 @@ def BuildingGenerator(building):
 
 #################################################################################
 
+def GetCoordinates(bType, name, count):
+
+    xBorder = int(180 - bType.width)
+    yBorder = int(160 - bType.length)
+
+    x  = randint(0, xBorder)
+    x2 = x + bType.width
+    y  = randint(0, yBorder)
+    y2 = y + bType.length
+
+    invalid = True
+
+    while invalid:
+        invalid = False
+        print("This house:", x, y)
+
+        if coords == []:
+            while WaterOverlap(x, y, x2, y2):
+                x = randint(0, xBorder)
+                x2 = x + bType.width
+                y = randint(0, yBorder)
+                y2 = y + bType.length
+
+        for i in coords:
+
+            xMIN = i[2]                 # x coordinate
+            xMAX = i[2] + i[1].width    # x coordinate + width
+            yMIN = i[3]                 # y coordinate
+            yMAX = i[3] + i[1].length   # y coodinate + length
+            print("Neighbour:", xMIN, yMIN)
+
+            if Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX) or \
+               CheckFreespaceOverlap(bType, x, y) or \
+               WaterOverlap(x, y, x2, y2):
+
+                print(x,y,"are not right, same as",i[0],xMIN,xMAX)
+                x = randint(0, xBorder)
+                x2 = x + bType.width
+                y = randint(0, yBorder)
+                y2 = y + bType.length
+                print("changing chords")
+                invalid = True
+                break
+
+    print("checked all",count,"buildings")
+    coords.append((name+str(count),bType,x,y))
+    return x,y
+
+#################################################################################
+
 def GenerateBuildings():
     BuildingGenerator(BuildingQueue())
 
 #################################################################################
 
 def Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX):
-
     if ((xMIN <= x <= xMAX  or   xMIN <= x2 <= xMAX) or \
         (x <= xMIN <= x2    or   x <= xMAX <= x2)) and \
        ((yMIN <= y <= yMAX  or   yMIN <= y2 <= yMAX) or \
@@ -192,28 +198,36 @@ def Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX):
 
 #################################################################################
 
-def CheckFreespaceOverlap(a, x, y):
-    for b in buildingsPlaced:
-        if (a == b):
+def CheckFreespaceOverlap(bType, x, y):
+    for n in buildingsPlaced:
+        if (bType == n):
             pass
-        elif FreespaceOverlap(a, b, x, y) == True:
+        elif FreespaceOverlap(bType, n, x, y) == True:
             return True
     return False
 
 #################################################################################
 
-def FreespaceOverlap(a, b, x, y):
-    if ((x + a.width + a.mtr_clearance) < b.x) and \
-        ((b.x - b.mtr_clearance) > (x + a.width + a.mtr_clearance)):
+def FreespaceOverlap(bType, n, x, y):
+    # check right side
+    if ((x + bType.width + bType.mtr_clearance) < n.x) and \
+        ((n.x - n.mtr_clearance) > (x + bType.width + bType.mtr_clearance)):
+        # print('no overlap right side')
         return False
-    if (x - a.mtr_clearance) > (b.x + b.width) and \
-        ((b.x + b.width + b.mtr_clearance) < (x - a.mtr_clearance)):
+    # check left side
+    if (x - bType.mtr_clearance) > (n.x + n.width) and \
+        ((n.x + n.width + n.mtr_clearance) < (x - bType.mtr_clearance)):
+        # print('no overlap left side')
         return False
-    if ((y + a.length + a.mtr_clearance) < b.y) and \
-        (b.y + b.mtr_clearance > (y + a.length + a.mtr_clearance)):
+    # check top side
+    if ((y + bType.length + bType.mtr_clearance) < n.y) and \
+        ((n.y - n.mtr_clearance) > (y + bType.length + bType.mtr_clearance)):
+        # print('no overlap top side')
         return False
-    if (y - a.mtr_clearance) > (b.y + b.length) and \
-        ((b.y + b.length + b.mtr_clearance) < (y - a.mtr_clearance)):
+    # check bottom side
+    if (y - bType.mtr_clearance) > (n.y + n.length) and \
+        ((n.y + n.length + n.mtr_clearance) < (y - bType.mtr_clearance)):
+        # print('no overlap bottom side')
         return False
     return True
 
@@ -226,12 +240,12 @@ def WaterOverlap(x, y, x2, y2):
     waterWidth = water.width
     waterLength = water.length
 
+    # check if coordinates aren't lying in waterbody
     if (waterX < x < (waterX + waterWidth) or \
         waterX < x2 < (waterX + waterWidth)) and \
         (waterY < y < (waterY + waterLength) or \
         waterY < y2 < (waterY + waterLength)):
         return True
-
     return False
 
 #################################################################################
@@ -243,21 +257,17 @@ def TotalScore():
     # iterate over every house placed
     for thisHouse in buildingsPlaced:
         count += 1
-        print("round: ", count)
 
         # coordinates of the x and y ranges of relative house
         x = thisHouse.x
         xMAX = thisHouse.x + thisHouse.width
         y = thisHouse.y
         yMAX = thisHouse.y + thisHouse.length
-        print(x, xMAX, y, yMAX)
 
         distances = DistanceToNeighbours(x,xMAX,y,yMAX,thisHouse)
-        print(distances)
         smallestDistance = GetSmallestDistance(distances)
 
         thisScore = GetScore(thisHouse, smallestDistance)
-        print(thisScore)
         score += thisScore
         # score = 0
     return score
@@ -279,13 +289,13 @@ def DistanceToNeighbours(x, xMAX, y, yMAX, thisHouse):
         if (thisHouse.name == neighbour.name):
             pass
         else:
-            print("neighbour:", nX, nY, nW, nL)
+            # print("neighbour:", nX, nY, nW, nL)
             if Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW) == 0:
                 freeMeters = FreemetersLeftOrRight(x,xMAX,nX,nW)
-                print("right or left:", freeMeters)
+                # print("right or left:", freeMeters)
             elif Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW) == 1:
                 freeMeters = FreemetersUpOrDown(y,yMAX,nY,nL)
-                print("top or bottom:", freeMeters)
+                # print("top or bottom:", freeMeters)
             else:
                 if FreemetersDiagonal(y, nY,nL) == 0:
                     freeMeters = FreemetersDiagonalBottom(y,x,nY,nL,nX,nW,yMAX,xMAX)
@@ -320,15 +330,13 @@ def FreemetersLeftOrRight(x,xMAX,nX,nW):
     #neighbour on right side
     if (xMAX < nX):
         freeMeters = nX - xMAX
-        print("right side:", freeMeters)
+        # print("right side:", freeMeters)
         return freeMeters
     #neighbour on left side
     elif(x > (nX + nW)):
         freeMeters = x - (nX + nW)
-        print("left side:", freeMeters)
+        # print("left side:", freeMeters)
         return freeMeters
-    else:
-        print("should be diagonal")
 
 #################################################################################
 
@@ -336,12 +344,12 @@ def FreemetersUpOrDown(y,yMAX,nY,nL):
     #neighbour on top
     if (yMAX < nY):
         freeMeters = nY - yMAX
-        print("top side:", freeMeters)
+        # print("top side:", freeMeters)
         return freeMeters
     #neighbour bottom
     elif (y > (nY + nL)):
         freeMeters = y - (nY + nL)
-        print("bottom side:", freeMeters)
+        # print("bottom side:", freeMeters)
         return freeMeters
 
 #################################################################################
@@ -361,7 +369,7 @@ def FreemetersDiagonalBottom(y, x, nY,nL,nX,nW,yMAX,xMAX):
         b = y - (nY + nL)
         cSquare = (a**2) + (b**2)
         freeMeters = math.sqrt(cSquare)
-        print("bottom left",freeMeters)
+        # print("bottom left",freeMeters)
         return freeMeters
     #diagonal check bottom right
     if (xMAX < nX):
@@ -369,7 +377,7 @@ def FreemetersDiagonalBottom(y, x, nY,nL,nX,nW,yMAX,xMAX):
         b = yMAX - nY
         cSquare = (a**2) + (b**2)
         freeMeters = math.sqrt(cSquare)
-        print("bottom right:",freeMeters)
+        # print("bottom right:",freeMeters)
         return freeMeters
 
 #################################################################################
@@ -381,7 +389,7 @@ def FreemetersDiagonalTop(y, x, nY,nL,nX,nW,yMAX,xMAX):
         b = y + (nY + nL)
         cSquare = (a**2) + (b**2)
         freeMeters = math.sqrt(cSquare)
-        print("top left:",freeMeters)
+        # print("top left:",freeMeters)
         return freeMeters
     #diagonal check top right
     if (xMAX < nX):
@@ -389,7 +397,7 @@ def FreemetersDiagonalTop(y, x, nY,nL,nX,nW,yMAX,xMAX):
         b = yMAX + nY
         cSquare = (a**2) + (b**2)
         freeMeters = math.sqrt(cSquare)
-        print("top right:",freeMeters)
+        # print("top right:",freeMeters)
         return freeMeters
 
 #################################################################################
