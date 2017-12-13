@@ -12,9 +12,9 @@ coords          = Building.coords
 
 def Amount():
     amount = int(input("How many buildings? (20, 40 or 60) \n"))
-    # while amount != 20 and amount != 40 and amount != 60:
-    #     print("Please provide 20, 40 or 60")
-    #     amount = int(input("How many buildings? (20, 40 or 60) \n"))
+    while amount != 20 and amount != 40 and amount != 60:
+        print("Please provide 20, 40 or 60")
+        amount = int(input("How many buildings? (20, 40 or 60) \n"))
     return amount
 
 #################################################################################
@@ -29,6 +29,7 @@ def Variant(amount):
     else:
         variant = "Amstelhaege"
     return variant
+
 #################################################################################
 
 def Grid(build, variant, amount, totalScore):
@@ -82,11 +83,15 @@ def GetCoordinates(bType, name, count):
 
     while invalid:
         invalid = False
-        for i in coords:
 
-            if coords == []:
-                print ("empty arr")
-                break
+        if coords == []:
+            while WaterOverlap(x, y, x2, y2):
+                x = randint(0, xBorder)
+                x2 = x + bType.width
+                y = randint(0, yBorder)
+                y2 = y + bType.length
+
+        for i in coords:
 
             xMIN = i[2]                 # x coordinate
             xMAX = i[2] + i[1].width    # x coordinate + width
@@ -182,7 +187,6 @@ def GenerateBuildings():
 #################################################################################
 
 def Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX):
-
     if ((xMIN <= x <= xMAX  or   xMIN <= x2 <= xMAX) or \
         (x <= xMIN <= x2    or   x <= xMAX <= x2)) and \
        ((yMIN <= y <= yMAX  or   yMIN <= y2 <= yMAX) or \
@@ -231,7 +235,6 @@ def WaterOverlap(x, y, x2, y2):
         (waterY < y < (waterY + waterLength) or \
         waterY < y2 < (waterY + waterLength)):
         return True
-
     return False
 
 #################################################################################
