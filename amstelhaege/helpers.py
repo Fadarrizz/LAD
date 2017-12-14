@@ -1,9 +1,10 @@
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import matplotlib.ticker as plticker
 import math as math
 from random import randint
 from classes import *
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import matplotlib.ticker as plticker
+import algorithms.randomfunction
 
 buildingsPlaced = Building.buildingsPlaced
 coords          = Building.coords
@@ -44,8 +45,8 @@ def Grid(build, variant, amount, totalScore):
     loc = plticker.MultipleLocator(base=intervals)
     ax.xaxis.set_major_locator(loc)
     ax.yaxis.set_major_locator(loc)
-    ax.set_xlim(0, cs_Grid.xMAX)
-    ax.set_ylim(0, cs_Grid.yMAX)
+    ax.set_xlim(0, theGrid.xMAX)
+    ax.set_ylim(0, theGrid.yMAX)
     ax.set_axisbelow(True)
     plt.suptitle(variant + ' - ' + str(amount) + ' buildings')
     plt.title('score: ${:,.2f}'.format(totalScore))
@@ -67,7 +68,7 @@ def Grid(build, variant, amount, totalScore):
     # # Show map
     # plt.show()
 
-#################################################################################
+# #################################################################################
 
 def BuildingQueue(amount):
     print("Starting building generation")
@@ -135,8 +136,8 @@ def BuildingGenerator(building):
 
 def GetCoordinates(bType, name, count):
 
-    xBorder = int(cs_Grid.xMAX - bType.width)
-    yBorder = int(cs_Grid.yMAX - bType.length)
+    xBorder = int(theGrid.xMAX - bType.width)
+    yBorder = int(theGrid.yMAX - bType.length)
 
     x  = randint(0, xBorder)
     x2 = x + bType.width
@@ -247,30 +248,6 @@ def WaterOverlap(x, y, x2, y2):
         waterY < y2 < (waterY + waterLength)):
         return True
     return False
-
-#################################################################################
-
-def TotalScore():
-    score = 0
-    # add counter
-    count = 0
-    # iterate over every house placed
-    for thisHouse in buildingsPlaced:
-        count += 1
-
-        # coordinates of the x and y ranges of relative house
-        x = thisHouse.x
-        xMAX = thisHouse.x + thisHouse.width
-        y = thisHouse.y
-        yMAX = thisHouse.y + thisHouse.length
-
-        distances = DistanceToNeighbours(x,xMAX,y,yMAX,thisHouse)
-        smallestDistance = GetSmallestDistance(distances)
-
-        thisScore = GetScore(thisHouse, smallestDistance)
-        score += thisScore
-        # score = 0
-    return score
 
 #################################################################################
 

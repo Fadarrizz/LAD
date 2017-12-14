@@ -1,4 +1,6 @@
-class cs_Grid (object):
+import helpers
+
+class theGrid (object):
     xMAX = 180
     yMAX = 160
 
@@ -36,10 +38,6 @@ class House(Building):
     percentage      = 0.03
     color           = '#8ca861'
 
-    # def calc_value(self, free_space):
-    #     self.free_space = xxxx
-    #     self.value = self.price + self.price * (self.percentage * self.free_space)
-
 class Bungalow(Building):
     """Class definition for a detached house."""
     house_type      = 'Bungalow'
@@ -50,10 +48,6 @@ class Bungalow(Building):
     percentage      = 0.04
     color           = '#E5B181'
 
-    # def calc_value(self, free_space):
-    #     self.free_space = xxxx
-    #     self.value = self.price + self.price * (self.percentage * self.free_space)
-
 class Maison(Building):
     """Class definition for a detached house."""
     house_type      = 'Maison'
@@ -63,10 +57,6 @@ class Maison(Building):
     price           = 610000
     percentage      = 0.06
     color           = '#DE6B48'
-
-    # def calc_value(self, free_space):
-    #     self.free_space = xxxx
-    #     self.value = self.price + self.price * (self.percentage * self.free_space)
 
 class Waterbody(object):
     """Class definition for a waterbody."""
@@ -79,3 +69,31 @@ class Waterbody(object):
 
         self.a = self.width / 2
         self.b = self.length / 2
+
+#################################################################################
+
+class TotalScore(object):
+    def totalScore():
+        buildingsPlaced = Building.buildingsPlaced
+        score = 0
+        # add counter
+        count = 0
+        # iterate over every house placed
+        for thisHouse in buildingsPlaced:
+            count += 1
+
+            # coordinates of the x and y ranges of relative house
+            x = thisHouse.x
+            xMAX = thisHouse.x + thisHouse.width
+            y = thisHouse.y
+            yMAX = thisHouse.y + thisHouse.length
+
+            distances = helpers.DistanceToNeighbours(x,xMAX,y,yMAX,thisHouse)
+            smallestDistance = helpers.GetSmallestDistance(distances)
+
+            thisScore = helpers.GetScore(thisHouse, smallestDistance)
+            score += thisScore
+            # score = 0
+        return score
+
+#################################################################################

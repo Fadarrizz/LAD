@@ -1,9 +1,11 @@
+
+from algorithms.randomfunction import *
 from classes import *
 from helpers import *
 
 amount = Amount()
 
-Grid(BuildingGenerator(BuildingQueue(amount)),Variant(amount),amount, TotalScore())
+Grid(random(amount), Variant(Amount), amount, TotalScore.totalScore())
 
-# Show map
+# # Show map
 plt.show()
