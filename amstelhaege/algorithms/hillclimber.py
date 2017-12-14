@@ -1,46 +1,37 @@
-# choose random building
-# choose random coordinates
-# check for collision with new coords
-# check total score
-# 	if not improved, discard coords
-# 	else, keep changes
+import helpers
+import classes
 
-# backup buildings array
-ArrayBackup(buidingsPlaced)
-
-# Calculate total score
-oldScore = classes.TotalScore.totalScore()
-
-# define iterations
-SIZE = 10
-
-while i < SIZE:
-    # Choose random building from Building.buildingsPlaced
-    building = buildingsPlaced[RandomBuilding()]
-    xOld = building.x
-    yOld = building.y
-
-    # Generate new random coordinates
-    coords = GenerateCoordinates(building.bType)
-    x = coords[0]
-    x2 = coords[1]
-    y = coords[2]
-    y2 = coords[3]
-
-    # Check for collision
-    while collision(x, x2, y, y2):
-        coords = GenerateCoordinates(building.bType)
-        x = coords[0]
-        x2 = coords[1]
-        y = coords[2]
-        y2 = coords[3]
-
-    building.x = x
-    building.y = y
+def Hillclimber():
+    # backup buildings array
+    helpers.ArrayBackup(classes.Building.buildingsPlaced)
 
     # Calculate total score
-    newScore = classes.TotalScore.totalScore()
+    oldScore = classes.TotalScore.totalScore()
 
-    if ScoreComparison:
-        building.x = xOld
-        building.y = yOld
+    # define iterations
+    SIZE = 50
+
+    print("starting Hillclimber")
+    for i in range(SIZE):
+        print("in for")
+        # Choose random building from Building.buildingsPlaced
+        building = classes.Building.buildingsPlaced[helpers.RandomBuilding()]
+        xOld = building.x
+        yOld = building.y
+
+        newCoords = helpers.GetCoordinates(building.name, building)
+
+        building.x = newCoords[0]
+        building.y = newCoords[1]
+        print("coords changed:",newCoords[0],newCoords[1])
+
+        # Calculate total score
+        newScore = classes.TotalScore.totalScore()
+
+        if helpers.ScoreComparison(oldScore, newScore):
+            building.x = xOld
+            building.y = yOld
+            print("coords reset")
+            continue
+        print("New score:", newScore)
+    return newScore

@@ -20,8 +20,14 @@ def Move():
     # total score
     totalScore = TotalScore()
 
+<<<<<<< HEAD
 
 
+=======
+    # array for checking new total scores
+    newScores = []
+
+>>>>>>> 53cdb9afa5db10c01734fc1d6f6ee179459c73a8
     for thisBuilding in buildingsPlaced:
 
         x = thisBuilding.x
@@ -30,6 +36,7 @@ def Move():
         y2 = y + thisBuilding.length
         bType = thisBuilding.house_type
 
+<<<<<<< HEAD
         while True:
             # array for checking new total scores
             newScores = []
@@ -45,6 +52,16 @@ def Move():
                 thisBuilding.side[1] = UndoStep(side[0], side[1], step)
 
             highestScore = GetHighestScore(newScores)
+=======
+        sides = [('left', x), ('right', x), ('up', y), ('down', y)]
+        for side in sides:
+            side[1] = MoveAStep(side[0], side[1], step)
+            if collision(thisBuilding, x, x2, y, y2, bType):
+                # undo step (NOT DONE)
+                pass
+            newScores.append(TotalScore())
+            # undo step
+>>>>>>> 53cdb9afa5db10c01734fc1d6f6ee179459c73a8
 
         # TODO:
         # see which score is the best

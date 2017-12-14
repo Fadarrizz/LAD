@@ -1,14 +1,16 @@
-class cs_Grid (object):
+import helpers
+
+class theGrid (object):
     xMAX = 180
     yMAX = 160
 
 class Building(object):
     """Class definition for a house construction"""
-    # __metaclass__ = ABCMeta
+
     buildingsPlaced = []
-    coords          = []
+    arrBackup       = []
     GetScore        = []
-    house_type      = 0
+    bType           = 0
     width           = 0
     length          = 0
     mtr_clearance   = 0
@@ -28,7 +30,7 @@ class Building(object):
 
 class House(Building):
     """Class definition for a detached house."""
-    house_type      = 'House'
+    bType           = 'House'
     width           = 8
     length          = 8
     mtr_clearance   = 2
@@ -36,13 +38,9 @@ class House(Building):
     percentage      = 0.03
     color           = '#8ca861'
 
-    # def calc_value(self, free_space):
-    #     self.free_space = xxxx
-    #     self.value = self.price + self.price * (self.percentage * self.free_space)
-
 class Bungalow(Building):
     """Class definition for a detached house."""
-    house_type      = 'Bungalow'
+    bType           = 'Bungalow'
     width           = 10
     length          = 7.5
     mtr_clearance   = 3
@@ -50,13 +48,9 @@ class Bungalow(Building):
     percentage      = 0.04
     color           = '#E5B181'
 
-    # def calc_value(self, free_space):
-    #     self.free_space = xxxx
-    #     self.value = self.price + self.price * (self.percentage * self.free_space)
-
 class Maison(Building):
     """Class definition for a detached house."""
-    house_type      = 'Maison'
+    bType           = 'Maison'
     width           = 11
     length          = 10.5
     mtr_clearance   = 6
@@ -64,13 +58,10 @@ class Maison(Building):
     percentage      = 0.06
     color           = '#DE6B48'
 
-    # def calc_value(self, free_space):
-    #     self.free_space = xxxx
-    #     self.value = self.price + self.price * (self.percentage * self.free_space)
-
 class Waterbody(object):
     """Class definition for a waterbody."""
     color           = "#7DBBC3"
+    edgecolor       = "#08717f"
     def __init__(self, x, y, width, length):
         self.x      = x
         self.y      = y
@@ -79,3 +70,31 @@ class Waterbody(object):
 
         self.a = self.width / 2
         self.b = self.length / 2
+
+#################################################################################
+
+class TotalScore(object):
+    def totalScore():
+        buildingsPlaced = Building.buildingsPlaced
+        score = 0
+        # add counter
+        count = 0
+        # iterate over every house placed
+        for thisHouse in buildingsPlaced:
+            count += 1
+
+            # coordinates of the x and y ranges of relative house
+            x = thisHouse.x
+            xMAX = thisHouse.x + thisHouse.width
+            y = thisHouse.y
+            yMAX = thisHouse.y + thisHouse.length
+
+            distances = helpers.DistanceToNeighbours(x,xMAX,y,yMAX,thisHouse)
+            smallestDistance = helpers.GetSmallestDistance(distances)
+
+            thisScore = helpers.GetScore(thisHouse, smallestDistance)
+            score += thisScore
+            # score = 0
+        return score
+
+#################################################################################
