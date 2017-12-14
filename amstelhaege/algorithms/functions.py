@@ -2,24 +2,19 @@ import operator
 
 def collision(thisBuilding, x, x2, y, y2):
     """Checks if there is any collision with the chosen coordinates"""
-    invalid = True
+    for neighbour in buildingsPlaced:
+        yMIN = neighbour.y
+        xMIN = neighbour.x
+        yMAX = yMIN + neighbour.length
+        xMAX = xMIN + neighbour.width
 
-    while invalid:
-        invalid = False
-
-        for neighbour in buildingsPlaced:
-            yMIN = neighbour.y
-            xMIN = neighbour.x
-            yMAX = yMIN + neighbour.length
-            xMAX = xMIN + neighbour.width
-
-            # skip the indicated house
-            if (thisBuilding.name == neighbour.name):
-                continue
-            if Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX) or \
-               CheckFreespaceOverlap(bType, x, y) or \
-               WaterOverlap(x, y, x2, y2):
-               return True
+        # skip the indicated house
+        if (thisBuilding.name == neighbour.name):
+            continue
+        if Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX) or \
+           CheckFreespaceOverlap(bType, x, y) or \
+           WaterOverlap(x, y, x2, y2):
+           return True
     return False
 
 def GenerateCoordinates(bType):
@@ -58,15 +53,30 @@ def ArrayBackup(buildingsPlaced):
         arrBackup.append(building)
     print('Backup completed')
 
-scores = [20,30,40,50]
-
 def GetHighestScore(scores):
     index, score = max(enumerate(scores), key=operator.itemgetter(1))
     return index, score
 
 def RandomBuilding():
+    """Chooses random index for buildingsPlaced"""
     size = len(buildingsPlaced)
-    b = randint(0, size)
-    return b
+    index = randint(0, size)
+    return index
 
-def ApplyNewCoords()
+def GetScoreWithoutBuilding(totalScore, building, x, x2, y, y2):
+    """Calculates total score without specific building"""
+    distances = DistanceToNeighbours(x,x2,y,y2,building)
+    smallestDistance = GetSmallestDistance(distances)
+    thisScore = GetScore(building, smallestDistance)
+    totalScore += thisScore
+    return totalScore
+
+def GetScoreSingleBuilding(totalScore, minusScore):
+    """Calculates score of a single building"""
+    bScore = totalScore - minusScore
+    return bScore
+
+def ScoreComparison(oldScore, newScore):
+    if newScore > oldScore:
+        return False
+    return True

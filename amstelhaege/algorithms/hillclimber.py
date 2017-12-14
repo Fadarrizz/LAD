@@ -4,11 +4,21 @@
 # check total score
 # 	if not improved, discard coords
 # 	else, keep changes
-trigger = True
 
-while trigger == True:
+# backup buildings array
+ArrayBackup(buidingsPlaced)
+
+# Calculate total score
+oldScore = classes.TotalScore.totalScore()
+
+# define iterations
+SIZE = 10
+
+while i < SIZE:
     # Choose random building from Building.buildingsPlaced
-    building = buildingsPlaced(RandomBuilding())
+    building = buildingsPlaced[RandomBuilding()]
+    xOld = building.x
+    yOld = building.y
 
     # Generate new random coordinates
     coords = GenerateCoordinates(building.bType)
@@ -25,5 +35,12 @@ while trigger == True:
         y = coords[2]
         y2 = coords[3]
 
+    building.x = x
+    building.y = y
+
     # Calculate total score
-    
+    newScore = classes.TotalScore.totalScore()
+
+    if ScoreComparison:
+        building.x = xOld
+        building.y = yOld
