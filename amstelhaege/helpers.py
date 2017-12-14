@@ -1,25 +1,38 @@
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import matplotlib.ticker as plticker
+# course: Heuristieken
+# team: LADs
+# names: Daniel Walters, Auke Geerts, Leyla Banchaewa
+# file: helpers.py
+# description: This file contains all helper functions.
+
 import math as math
 from random import randint
 from classes import *
+import matplotlib.pyplot as plt
+import matplotlib.patches as patches
+import matplotlib.ticker as plticker
+import algorithms.randomfunction
 
-buildingsPlaced = Building.buildingsPlaced
-coords          = Building.coords
-
-#################################################################################
+################################################################################
 
 def Amount():
+    """Ask user input for amount of houses, i.e. the variant of the houseplan.
+    Also returns the amount as an integer.
+    """
+
     amount = int(input("How many buildings? (20, 40 or 60) \n"))
+
+    # keep asking for input until either 20, 40 or 60 is given
     while amount != 20 and amount != 40 and amount != 60:
-        print("Please provide 20, 40 or 60")
+        print("Amount invalid. Please choose one of the three options.")
         amount = int(input("How many buildings? (20, 40 or 60) \n"))
+
     return amount
 
-#################################################################################
+################################################################################
 
 def Variant(amount):
+    """Depending on the user input, the houseplan variant is determined."""
+
     if amount == 20:
         variant = "Variant 1"
     elif amount == 40:
@@ -30,69 +43,79 @@ def Variant(amount):
         variant = "Amstelhaege"
     return variant
 
-#################################################################################
+################################################################################
 
 def Grid(build, variant, amount, totalScore):
-    """Places requested houses on grid"""
+    """Places the created houses visually on a grid."""
 
     # Grid initialization
     fig, ax = plt.subplots()
     plt.axis('scaled')
-    ax.grid(which='major', axis='both', color ='gray', linestyle='--')
+    ax.grid(which='major', axis='both', color ='silver', linestyle='--')
     intervals = 10
-
     loc = plticker.MultipleLocator(base=intervals)
     ax.xaxis.set_major_locator(loc)
     ax.yaxis.set_major_locator(loc)
-    ax.set_xlim(0, cs_Grid.xMAX)
-    ax.set_ylim(0, cs_Grid.yMAX)
+    ax.set_xlim(0, theGrid.xMAX)
+    ax.set_ylim(0, theGrid.yMAX)
     ax.set_axisbelow(True)
     plt.suptitle(variant + ' - ' + str(amount) + ' buildings')
     plt.title('score: ${:,.2f}'.format(totalScore))
 
+    # static waterbody placement
     water = Waterbody(100, 88, 80, 72)
-
     water = patches.Rectangle((water.x, water.y), water.width,
-            water.length, color=Waterbody.color)
+            water.length, facecolor=Waterbody.color, edgecolor = '#08717f')
     ax.add_artist(water)
 
+    # iterate over each house in the build array build and place house on grid
     for i in build:
+        meters = i.mtr_clearance
+
         # Temp variable with building information
         temp = patches.Rectangle((i.x, i.y), i.width, i.length,
-                facecolor=i.color, edgecolor='black')
+                facecolor=i.color, edgecolor = 'black')
 
-        # Add building to map
+        clearance =patches.Rectangle(((i.x - i.mtr_clearance), (i.y - i.mtr_clearance)), (i.width + (i.mtr_clearance * 2)), (i.length+(i.mtr_clearance * 2)),
+                facecolor=i.color, alpha = 0.4)
+
+        # Add building to visual grid
         ax.add_artist(temp)
+        ax.add_artist(clearance)
 
     # # Show map
     # plt.show()
 
-#################################################################################
+################################################################################
 
 def BuildingQueue(amount):
+    """Generates a list indicating how many houses per type should be built."""
+
     print("Starting building generation")
 
-    # empty array
-    buildingsPlaced = []
-    coords = []
-
-    # init temp array
+    Building.buildingsPlaced = []
+    Building.coords = []
     building = []
 
     h = int((amount * 0.6))
     b = int((amount * 0.25))
     m = int((amount * 0.15))
 
+    # calculate amount of houses per type to build
     hArr    = ['h'] * h
     bArr    = ['b'] * b
     mArr    = ['m'] * m
-    # building.extend(hArr+bArr+mArr)
+
+    # building array is filled with
     building.extend(mArr+bArr+hArr)
+
     return building
 
-#################################################################################
+################################################################################
 
 def BuildingGenerator(building):
+    """Generates a list of instantiated houses with the corresponding
+    coordinates of the bottom-left corner."""
 
     countH = 0
     countB = 0
@@ -117,26 +140,29 @@ def BuildingGenerator(building):
             countM += 1
             count   = countM
 
-        # Random coordinates
+        # get random coordinates
         xy = GetCoordinates(bType, name, count)
         x = xy[0]
         y = xy[1]
 
-        # Create class object and add to array
+        # create class object and add to array
         temp = bType(name+str(count),x,y)
         print("Created", name+str(count),"at", "({},{})".format(x,y))
 
-        buildingsPlaced.append(temp)
+        Building.buildingsPlaced.append(temp)
 
     print("Building generation complete")
-    return buildingsPlaced
+    return Building.buildingsPlaced
 
-#################################################################################
+################################################################################
 
 def GetCoordinates(bType, name, count):
+    """"""
+    xBorder = int(theGrid.xMAX - bType.width)
+    yBorder = int(theGrid.yMAX - bType.length)
 
-    xBorder = int(cs_Grid.xMAX - bType.width)
-    yBorder = int(cs_Grid.yMAX - bType.length)
+    xBorder = int(theGrid.xMAX - bType.width)
+    yBorder = int(theGrid.yMAX - bType.length)
 
     x  = randint(0, xBorder)
     x2 = x + bType.width
@@ -149,14 +175,14 @@ def GetCoordinates(bType, name, count):
         invalid = False
         print("This house:", x, y)
 
-        if coords == []:
+        if Building.coords == []:
             while WaterOverlap(x, y, x2, y2):
                 x = randint(0, xBorder)
                 x2 = x + bType.width
                 y = randint(0, yBorder)
                 y2 = y + bType.length
 
-        for i in coords:
+        for i in Building.coords:
 
             xMIN = i[2]                 # x coordinate
             xMAX = i[2] + i[1].width    # x coordinate + width
@@ -178,15 +204,15 @@ def GetCoordinates(bType, name, count):
                 break
 
     print("checked all",count,"buildings")
-    coords.append((name+str(count),bType,x,y))
+    Building.coords.append((name+str(count),bType,x,y))
     return x,y
 
-#################################################################################
+################################################################################
 
 def GenerateBuildings():
     BuildingGenerator(BuildingQueue())
 
-#################################################################################
+################################################################################
 
 def Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX):
     if ((xMIN <= x <= xMAX  or   xMIN <= x2 <= xMAX) or \
@@ -196,17 +222,17 @@ def Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX):
         return True
     return False
 
-#################################################################################
+################################################################################
 
 def CheckFreespaceOverlap(bType, x, y):
-    for n in buildingsPlaced:
+    for n in Building.buildingsPlaced:
         if (bType == n):
             pass
         elif FreespaceOverlap(bType, n, x, y) == True:
             return True
     return False
 
-#################################################################################
+################################################################################
 
 def FreespaceOverlap(bType, n, x, y):
     # check right side
@@ -231,7 +257,7 @@ def FreespaceOverlap(bType, n, x, y):
         return False
     return True
 
-#################################################################################
+################################################################################
 
 def WaterOverlap(x, y, x2, y2):
     water = Waterbody(100, 88, 80, 72)
@@ -248,14 +274,15 @@ def WaterOverlap(x, y, x2, y2):
         return True
     return False
 
-#################################################################################
+################################################################################
 
 def TotalScore():
     score = 0
     # add counter
     count = 0
+
     # iterate over every house placed
-    for thisHouse in buildingsPlaced:
+    for thisHouse in Building.buildingsPlaced:
         count += 1
 
         # coordinates of the x and y ranges of relative house
@@ -272,14 +299,14 @@ def TotalScore():
         # score = 0
     return score
 
-#################################################################################
+################################################################################
 
 def DistanceToNeighbours(x, xMAX, y, yMAX, thisHouse):
 
     # empty temp array
     tempArr = []
 
-    for neighbour in buildingsPlaced:
+    for neighbour in Building.buildingsPlaced:
         nY = neighbour.y
         nX = neighbour.x
         nL = neighbour.length
@@ -298,13 +325,15 @@ def DistanceToNeighbours(x, xMAX, y, yMAX, thisHouse):
                 # print("top or bottom:", freeMeters)
             else:
                 if FreemetersDiagonal(y, nY,nL) == 0:
-                    freeMeters = FreemetersDiagonalBottom(y,x,nY,nL,nX,nW,yMAX,xMAX)
+                    freeMeters = FreemetersDiagonalBottom(y,x,nY,nL,nX,nW, \
+                    yMAX, xMAX)
                 else:
-                    freeMeters = FreemetersDiagonalTop(y,x,nY,nL,nX,nW,yMAX,xMAX)
+                    freeMeters = FreemetersDiagonalTop(y,x,nY,nL,nX,nW, \
+                    yMAX, xMAX)
             tempArr.append(freeMeters)
     return tempArr
 
-#################################################################################
+################################################################################
 
 def Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW):
     # left/right check
@@ -324,7 +353,7 @@ def Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW):
        (nX <= xMAX <= (nX + nW)):
        return 1
 
-#################################################################################
+################################################################################
 
 def FreemetersLeftOrRight(x,xMAX,nX,nW):
     #neighbour on right side
@@ -338,7 +367,7 @@ def FreemetersLeftOrRight(x,xMAX,nX,nW):
         # print("left side:", freeMeters)
         return freeMeters
 
-#################################################################################
+################################################################################
 
 def FreemetersUpOrDown(y,yMAX,nY,nL):
     #neighbour on top
@@ -352,7 +381,7 @@ def FreemetersUpOrDown(y,yMAX,nY,nL):
         # print("bottom side:", freeMeters)
         return freeMeters
 
-#################################################################################
+################################################################################
 
 def FreemetersDiagonal(y, nY,nL):
     if (y > (nY + nL)):
@@ -360,7 +389,7 @@ def FreemetersDiagonal(y, nY,nL):
     if (y < (nY + nL)):
         return 1
 
-#################################################################################
+################################################################################
 
 def FreemetersDiagonalBottom(y, x, nY,nL,nX,nW,yMAX,xMAX):
     #diagonal check bottom left
@@ -380,7 +409,7 @@ def FreemetersDiagonalBottom(y, x, nY,nL,nX,nW,yMAX,xMAX):
         # print("bottom right:",freeMeters)
         return freeMeters
 
-#################################################################################
+################################################################################
 
 def FreemetersDiagonalTop(y, x, nY,nL,nX,nW,yMAX,xMAX):
     #diagonal check top left
@@ -400,18 +429,18 @@ def FreemetersDiagonalTop(y, x, nY,nL,nX,nW,yMAX,xMAX):
         # print("top right:",freeMeters)
         return freeMeters
 
-#################################################################################
+################################################################################
 
 def GetSmallestDistance(distances):
 
     smallestDistance = min(float(distance) for distance in distances)
     return smallestDistance
 
-#################################################################################
+################################################################################
 
 def GetScore(bType, smallestDistance):
     value = bType.price + (((smallestDistance - bType.mtr_clearance) * \
             bType.percentage) * bType.price)
     return value
 
-#################################################################################
+################################################################################
