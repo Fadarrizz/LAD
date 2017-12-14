@@ -3,6 +3,7 @@
 # names: Daniel Walters, Auke Geerts, Leyla Banchaewa
 # file: helpers.py
 # description: This file contains all helper functions.
+
 import math as math
 from random import randint
 from classes import *
@@ -10,9 +11,6 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
 import algorithms.randomfunction
-
-buildingsPlaced = Building.buildingsPlaced
-coords          = Building.coords
 
 ################################################################################
 
@@ -67,12 +65,13 @@ def Grid(build, variant, amount, totalScore):
     # static waterbody placement
     water = Waterbody(100, 88, 80, 72)
     water = patches.Rectangle((water.x, water.y), water.width,
-            water.length, color=Waterbody.color)
+            water.length, facecolor=Waterbody.color, edgecolor = '#08717f')
     ax.add_artist(water)
 
     # iterate over each house in the build array build and place house on grid
     for i in build:
         meters = i.mtr_clearance
+
         # Temp variable with building information
         temp = patches.Rectangle((i.x, i.y), i.width, i.length,
                 facecolor=i.color, edgecolor = 'black')
@@ -88,15 +87,14 @@ def Grid(build, variant, amount, totalScore):
     # plt.show()
 
 ################################################################################
-# #################################################################################
 
 def BuildingQueue(amount):
     """Generates a list indicating how many houses per type should be built."""
 
     print("Starting building generation")
 
-    buildingsPlaced = []
-    coords = []
+    Building.buildingsPlaced = []
+    Building.coords = []
     building = []
 
     h = int((amount * 0.6))
@@ -151,10 +149,10 @@ def BuildingGenerator(building):
         temp = bType(name+str(count),x,y)
         print("Created", name+str(count),"at", "({},{})".format(x,y))
 
-        buildingsPlaced.append(temp)
+        Building.buildingsPlaced.append(temp)
 
     print("Building generation complete")
-    return buildingsPlaced
+    return Building.buildingsPlaced
 
 ################################################################################
 
@@ -177,14 +175,14 @@ def GetCoordinates(bType, name, count):
         invalid = False
         print("This house:", x, y)
 
-        if coords == []:
+        if Building.coords == []:
             while WaterOverlap(x, y, x2, y2):
                 x = randint(0, xBorder)
                 x2 = x + bType.width
                 y = randint(0, yBorder)
                 y2 = y + bType.length
 
-        for i in coords:
+        for i in Building.coords:
 
             xMIN = i[2]                 # x coordinate
             xMAX = i[2] + i[1].width    # x coordinate + width
@@ -206,7 +204,7 @@ def GetCoordinates(bType, name, count):
                 break
 
     print("checked all",count,"buildings")
-    coords.append((name+str(count),bType,x,y))
+    Building.coords.append((name+str(count),bType,x,y))
     return x,y
 
 ################################################################################
@@ -227,7 +225,7 @@ def Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX):
 ################################################################################
 
 def CheckFreespaceOverlap(bType, x, y):
-    for n in buildingsPlaced:
+    for n in Building.buildingsPlaced:
         if (bType == n):
             pass
         elif FreespaceOverlap(bType, n, x, y) == True:
@@ -284,7 +282,7 @@ def TotalScore():
     count = 0
 
     # iterate over every house placed
-    for thisHouse in buildingsPlaced:
+    for thisHouse in Building.buildingsPlaced:
         count += 1
 
         # coordinates of the x and y ranges of relative house
@@ -308,7 +306,7 @@ def DistanceToNeighbours(x, xMAX, y, yMAX, thisHouse):
     # empty temp array
     tempArr = []
 
-    for neighbour in buildingsPlaced:
+    for neighbour in Building.buildingsPlaced:
         nY = neighbour.y
         nX = neighbour.x
         nL = neighbour.length
