@@ -6,7 +6,7 @@ class theGrid (object):
 
 class Building(object):
     """Class definition for a house construction"""
-    # __metaclass__ = ABCMeta
+
     buildingsPlaced = []
     coords          = []
     GetScore        = []
