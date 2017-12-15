@@ -16,7 +16,7 @@ def Hillclimber():
     for i in range(SIZE):
 
         # Choose random building from Building.buildingsPlaced
-        building = classes.Building.buildingsPlaced[functions.helpers.RandomBuilding()]
+        building = classes.classes.Building.buildingsPlaced[functions.helpers.RandomBuilding()]
         xOld = building.x
         yOld = building.y
 
@@ -26,7 +26,7 @@ def Hillclimber():
         building.y = newCoords[1]
 
         # Calculate total score
-        newScore = classes.TotalScore.totalScore()
+        newScore = classes.classes.TotalScore.totalScore()
 
         # if score is not higher, reset to old coordinates
         if functions.helpers.ScoreComparison(oldScore, newScore):
@@ -38,4 +38,4 @@ def Hillclimber():
         print("new score:",newScore)
         # print("New score:", newScore)
     print("done!")
-    return newScore
+    return oldScore
