@@ -14,6 +14,7 @@ from algorithms.randomfunction import *
 import classes
 from helpers import *
 from algorithms.hillclimber import Hillclimber
+from algorithms.simulatedannealing import SimulatedAnnealing
 
 def main():
     amount = Amount()
@@ -22,7 +23,10 @@ def main():
     # Show map
     plt.show()
 
-    newScore = Hillclimber()
+    # newScore = Hillclimber()
+
+    newScore = SimulatedAnnealing()
+
     Grid(classes.Building.buildingsPlaced, Variant(Amount), amount, newScore)
     # Show map
     plt.show()
