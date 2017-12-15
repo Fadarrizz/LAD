@@ -11,9 +11,15 @@
 # import matplotlib.patches as patches
 # import matplotlib.ticker as plticker
 from algorithms.randomfunction import *
+<<<<<<< Updated upstream
 import classes.classes
 from functions.helpers import *
 from algorithms.hillclimber import Hillclimber
+=======
+import classes
+from helpers import *
+from algorithms.hillclimber import Hillclimber, HillclimberTester
+>>>>>>> Stashed changes
 from algorithms.simulatedannealing import SimulatedAnnealing
 
 def main():
@@ -36,6 +42,8 @@ def main():
     # plt.ylabel('score')
     # plt.xlabel('iteration')
     # plt.show()
+
+    # HillclimberTester()
 
 if __name__ == "__main__":
     main()

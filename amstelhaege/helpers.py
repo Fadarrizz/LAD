@@ -6,7 +6,7 @@
 
 import math as math
 from random import randint
-from classes.classes import *
+from classes import *
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
@@ -89,7 +89,7 @@ def Grid(build, variant, amount, totalScore):
 def BuildingQueue(amount):
     """Generates a list indicating how many houses per type should be built."""
 
-    # print("Starting building generation")
+    print("Starting building generation")
 
     Building.buildingsPlaced = []
     Building.coords = []
@@ -145,10 +145,11 @@ def BuildingGenerator(building):
 
         # create class object and add to array
         temp = bType(name+str(count),x,y)
+        # print("Created", name+str(count),"at", "({},{})".format(x,y))
 
         Building.buildingsPlaced.append(temp)
 
-    # print("Building generation complete")
+    print("Building generation complete")
     return Building.buildingsPlaced
 
 ################################################################################
@@ -234,18 +235,22 @@ def FreespaceOverlap(bType, n, x, y):
     # check right side
     if ((x + bType.width + bType.mtr_clearance) < n.x) and \
         ((n.x - n.mtr_clearance) > (x + bType.width + bType.mtr_clearance)):
+        # print('no overlap right side')
         return False
     # check left side
     if (x - bType.mtr_clearance) > (n.x + n.width) and \
         ((n.x + n.width + n.mtr_clearance) < (x - bType.mtr_clearance)):
+        # print('no overlap left side')
         return False
     # check top side
     if ((y + bType.length + bType.mtr_clearance) < n.y) and \
         ((n.y - n.mtr_clearance) > (y + bType.length + bType.mtr_clearance)):
+        # print('no overlap top side')
         return False
     # check bottom side
     if (y - bType.mtr_clearance) > (n.y + n.length) and \
         ((n.y + n.length + n.mtr_clearance) < (y - bType.mtr_clearance)):
+        # print('no overlap bottom side')
         return False
     return True
 
@@ -283,10 +288,13 @@ def DistanceToNeighbours(x, xMAX, y, yMAX, thisHouse):
         if (thisHouse.name == neighbour.name):
             pass
         else:
+            # print("neighbour:", nX, nY, nW, nL)
             if Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW) == 0:
                 freeMeters = FreemetersLeftOrRight(x,xMAX,nX,nW)
+                # print("right or left:", freeMeters)
             elif Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW) == 1:
                 freeMeters = FreemetersUpOrDown(y,yMAX,nY,nL)
+                # print("top or bottom:", freeMeters)
             else:
                 if FreemetersDiagonal(y, nY,nL) == 0:
                     freeMeters = FreemetersDiagonalBottom(y,x,nY,nL,nX,nW, \
@@ -308,11 +316,11 @@ def Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW):
     if (x <= nX <= xMAX) or \
        (x <= (nX + nW) <= xMAX):
        return 1
-    # left/right check from neighbour perspective
+    # left/right check from neighbour's perspective
     if (nY <= y <= (nY + nL)) or \
        (nY <= yMAX <= (nY + nL)):
        return 0
-    # bottom/top check from neighbour perspective
+    # bottom/top check from neighbour's perspective
     if (nX <= x <= (nX + nW)) or \
        (nX <= xMAX <= (nX + nW)):
        return 1
@@ -344,14 +352,21 @@ def FreemetersUpOrDown(y,yMAX,nY,nL):
 ################################################################################
 
 def FreemetersDiagonal(y, nY,nL):
+    """Returns whether a neighbour building is on the upper half or lower half
+    or the map."""
+    # bottom half check
     if (y > (nY + nL)):
         return 0
+    # upper half check
     if (y < (nY + nL)):
         return 1
 
 ################################################################################
 
 def FreemetersDiagonalBottom(y, x, nY,nL,nX,nW,yMAX,xMAX):
+    """Returns the amount of freemeters from the bottom left or bottom right,
+    depending on the value of x and neighbour's x value.
+    """
     #diagonal check bottom left
     if (x > (nX + nW)):
         a = x - (nX + nW)
@@ -370,13 +385,15 @@ def FreemetersDiagonalBottom(y, x, nY,nL,nX,nW,yMAX,xMAX):
 ################################################################################
 
 def FreemetersDiagonalTop(y, x, nY,nL,nX,nW,yMAX,xMAX):
+    """Returns the amount of freemeters from the top left or top right,
+    depending on the input.
+    """
     #diagonal check top left
     if (x > (nX + nW)):
         a = x + (nX + nW)
         b = y + (nY + nL)
         cSquare = (a**2) + (b**2)
         freeMeters = math.sqrt(cSquare)
-        # print("top left:",freeMeters)
         return freeMeters
     #diagonal check top right
     if (xMAX < nX):
@@ -384,19 +401,19 @@ def FreemetersDiagonalTop(y, x, nY,nL,nX,nW,yMAX,xMAX):
         b = yMAX + nY
         cSquare = (a**2) + (b**2)
         freeMeters = math.sqrt(cSquare)
-        # print("top right:",freeMeters)
         return freeMeters
 
 ################################################################################
 
 def GetSmallestDistance(distances):
-
+    """Returns the smallest distance from a list of distances"""
     smallestDistance = min(float(distance) for distance in distances)
     return smallestDistance
 
 ################################################################################
 
 def GetScore(bType, smallestDistance):
+    """Calculates the score of a building"""
     value = bType.price + (((smallestDistance - bType.mtr_clearance) * \
             bType.percentage) * bType.price)
     return value

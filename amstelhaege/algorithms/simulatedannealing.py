@@ -10,6 +10,9 @@ import functions.helpers
 import random
 import matplotlib.pyplot as plt
 def SimulatedAnnealing():
+
+    # classes.Builidng.GetScore = []
+
     # backup buildings array
     functions.helpers.ArrayBackup(classes.classes.Building.buildingsPlaced)
 
@@ -38,7 +41,7 @@ def SimulatedAnnealing():
     # define acceptance probility
     ap = (newScore - oldScore / c)
 
-    print("starting Hillclimber")
+    print("starting SimulatedAnnealing")
     while c > c_min:
         iteration +=1
         for i in range(SIZE):
@@ -66,7 +69,7 @@ def SimulatedAnnealing():
             #     continue
             #     print("New score:", newScore)
 
-            elif(ap < random.random()):
+            elif(ap > random.random()):
                 # Calcualte total score
                 newScore = classes.classes.TotalScore.totalScore()
                 print("New score:", newScore)
