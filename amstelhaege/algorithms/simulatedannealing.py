@@ -6,15 +6,18 @@
 # description: This file contains all helper functions.
 
 import classes
-import helpers
+import functions.helpers
 import random
-
+import matplotlib.pyplot as plt
 def SimulatedAnnealing():
     # backup buildings array
-    helpers.ArrayBackup(classes.Building.buildingsPlaced)
+    functions.helpers.ArrayBackup(classes.classes.Building.buildingsPlaced)
+
+    #scores Array
+    Scores =  []
 
     # Calculate total score
-    oldScore = classes.TotalScore.totalScore()
+    oldScore = classes.classes.TotalScore.totalScore()
 
     #define newScore
     newScore = 0
@@ -29,28 +32,32 @@ def SimulatedAnnealing():
     # define alpha, de cooling factor
     a = 0.9
 
+    #define iteration
+    iteration = 0
+
     # define acceptance probility
     ap = (newScore - oldScore / c)
 
     print("starting Hillclimber")
     while c > c_min:
+        iteration +=1
         for i in range(SIZE):
             print("in for")
             # Choose random building from Building.buildingsPlaced
-            building = classes.Building.buildingsPlaced[helpers.RandomBuilding()]
+            building = classes.classes.Building.buildingsPlaced[functions.helpers.RandomBuilding()]
             xOld = building.x
             yOld = building.y
 
-            newCoords = helpers.GetCoordinates(building.name, building)
+            newCoords = functions.helpers.GetCoordinates(building.name, building)
 
             building.x = newCoords[0]
             building.y = newCoords[1]
             print("coords changed:",newCoords[0],newCoords[1])
 
-            if (helpers.ScoreComparison(oldScore, newScore) == False):
+            if (functions.helpers.ScoreComparison(oldScore, newScore) == False):
 
                 # Calculate total score
-                newScore = classes.TotalScore.totalScore()
+                newScore = classes.classes.TotalScore.totalScore()
                 print("New score:", newScore)
             # if helpers.ScoreComparison(oldScore, newScore):
             #     building.x = xOld
@@ -61,11 +68,21 @@ def SimulatedAnnealing():
 
             elif(ap < random.random()):
                 # Calcualte total score
-                newScore = classes.TotalScore.totalScore()
+                newScore = classes.classes.TotalScore.totalScore()
                 print("New score:", newScore)
             # Decrease temperature
             c = c * a
-            # update score
-            oldScore = newScore
 
+            print("iteration: ", iteration, "\n score: ", newScore)
+            classes.classes.TotalScore.Scores.append(newScore)
+        print (classes.classes.TotalScore.Scores)
         return newScore
+
+    # for i in Scores:
+    #     plt.plot(i)
+    #     plt.ylabel('score')
+    #     plt.xlabel('iteration')
+
+    # plot results
+    # plt.plot()
+    # plt.show()

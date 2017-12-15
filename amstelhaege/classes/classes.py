@@ -1,4 +1,4 @@
-import helpers
+import functions.helpers
 
 class theGrid (object):
     xMAX = 180
@@ -74,6 +74,8 @@ class Waterbody(object):
 #################################################################################
 
 class TotalScore(object):
+    Scores = []
+
     def totalScore():
         buildingsPlaced = Building.buildingsPlaced
         score = 0
@@ -89,10 +91,10 @@ class TotalScore(object):
             y = thisHouse.y
             yMAX = thisHouse.y + thisHouse.length
 
-            distances = helpers.DistanceToNeighbours(x,xMAX,y,yMAX,thisHouse)
-            smallestDistance = helpers.GetSmallestDistance(distances)
+            distances = functions.helpers.DistanceToNeighbours(x,xMAX,y,yMAX,thisHouse)
+            smallestDistance = functions.helpers.GetSmallestDistance(distances)
 
-            thisScore = helpers.GetScore(thisHouse, smallestDistance)
+            thisScore = functions.helpers.GetScore(thisHouse, smallestDistance)
             score += thisScore
             # score = 0
         return score
