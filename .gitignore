@@ -1,4 +1,10 @@
 amstelhaege/__pycache__/*
-amstelhaege/__pycache__/
+amstelhaege/algorithms/__pycache__/*
+amstelhaege/functions/__pycache__/*
+amstelhaege/classes/__pycache__/*
+
 *.pyc
 *.DS_Store
+
+amstelhaege/test/
+amstelhaege/old/

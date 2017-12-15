@@ -1,4 +1,4 @@
-from helpers import *
+from functions.helpers import *
 
 def random(amount):
     random = BuildingGenerator(BuildingQueue(amount))

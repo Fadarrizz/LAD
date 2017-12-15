@@ -11,15 +11,15 @@
 # import matplotlib.patches as patches
 # import matplotlib.ticker as plticker
 from algorithms.randomfunction import *
-import classes
-from helpers import *
+import classes.classes
+from functions.helpers import *
 from algorithms.hillclimber import Hillclimber
 from algorithms.simulatedannealing import SimulatedAnnealing
 
 def main():
     amount = Amount()
 
-    Grid(random(amount), Variant(Amount), amount, classes.TotalScore.totalScore())
+    Grid(random(amount), Variant(Amount), amount, classes.classes.TotalScore.totalScore())
     # Show map
     plt.show()
 
@@ -27,9 +27,15 @@ def main():
 
     newScore = SimulatedAnnealing()
 
-    Grid(classes.Building.buildingsPlaced, Variant(Amount), amount, newScore)
+    Grid(classes.classes.Building.buildingsPlaced, Variant(Amount), amount, newScore)
     # Show map
     plt.show()
+    #
+    # for i in TotalScore.Scores:
+    #     plt.plot(TotalScore.Scores[int(i)])
+    # plt.ylabel('score')
+    # plt.xlabel('iteration')
+    # plt.show()
 
 if __name__ == "__main__":
     main()
