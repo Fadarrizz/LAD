@@ -1,4 +1,3 @@
-
 # course: Heuristieken
 # team: LADs
 # names: Daniel Walters, Auke Geerts, Leyla Banchaewa
@@ -8,13 +7,15 @@
 import classes
 import functions.helpers
 import random
+import math
 import matplotlib.pyplot as plt
+
 def SimulatedAnnealing():
     # backup buildings array
     functions.helpers.ArrayBackup(classes.classes.Building.buildingsPlaced)
 
     #scores Array
-    Scores =  []
+    Scores = classes.classes.TotalScore.Scores
 
     # Calculate total score
     oldScore = classes.classes.TotalScore.totalScore()
@@ -36,7 +37,7 @@ def SimulatedAnnealing():
     iteration = 0
 
     # define acceptance probility
-    ap = (newScore - oldScore / c)
+    ap = math.exp((newScore - oldScore) / c)
 
     print("starting Hillclimber")
     while c > c_min:
@@ -59,12 +60,6 @@ def SimulatedAnnealing():
                 # Calculate total score
                 newScore = classes.classes.TotalScore.totalScore()
                 print("New score:", newScore)
-            # if helpers.ScoreComparison(oldScore, newScore):
-            #     building.x = xOld
-            #     building.y = yOld
-            #     print("coords reset")
-            #     continue
-            #     print("New score:", newScore)
 
             elif(ap < random.random()):
                 # Calcualte total score
@@ -72,17 +67,15 @@ def SimulatedAnnealing():
                 print("New score:", newScore)
             # Decrease temperature
             c = c * a
-
-            print("iteration: ", iteration, "\n score: ", newScore)
-            classes.classes.TotalScore.Scores.append(newScore)
+            oldScore = newScore
+            print("iteration: ", iteration, "\n score: ", oldScore)
+            classes.classes.TotalScore.Scores.append(oldScore)
         print (classes.classes.TotalScore.Scores)
+
+        for i in classes.classes.TotalScore.Scores:
+            for k in classes.classes.TotalScore.Scores:
+                if i > k:
+                    newScore = i
+                else:
+                    newScore = k
         return newScore
-
-    # for i in Scores:
-    #     plt.plot(i)
-    #     plt.ylabel('score')
-    #     plt.xlabel('iteration')
-
-    # plot results
-    # plt.plot()
-    # plt.show()
