@@ -10,7 +10,7 @@ def Hillclimber():
     newScore = 0
 
     # define iterations
-    SIZE = 20
+    SIZE = 200
 
     print("executing Hillclimber...")
     for i in range(SIZE):
@@ -30,12 +30,12 @@ def Hillclimber():
 
         # if score is not higher, reset to old coordinates
         if functions.helpers.ScoreComparison(oldScore, newScore):
-            print (oldScore, "is lower than", newScore)
+            print (oldScore, "is bigger than", newScore)
             building.x = xOld
             building.y = yOld
             continue
         oldScore = newScore
-        print("new score:",newScore)
+        print("new score:",oldScore)
         # print("New score:", newScore)
     print("done!")
     return oldScore

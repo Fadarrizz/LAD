@@ -145,7 +145,7 @@ def BuildingGenerator(building):
 
         # create class object and add to array
         temp = bType(name+str(count),x,y)
-        # print("Created", name+str(count),"at", "({},{})".format(x,y))
+        print("Created", name+str(count),"at", "({},{})".format(x,y))
 
         Building.buildingsPlaced.append(temp)
 
