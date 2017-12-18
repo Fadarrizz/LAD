@@ -26,13 +26,13 @@ def SimulatedAnnealing():
     newScore = 0
 
     # define iterations
-    SIZE = 200
+    SIZE = 20000
 
     # define initial temperature and minimal temperature
     c = 1
     c_min = 0.000001
 
-    # define alpha, de cooling factor
+    # define alpha, the cooling factor
     a = 0.9
 
     while c > c_min:
@@ -53,7 +53,7 @@ def SimulatedAnnealing():
             # define acceptance probility
             ap = (oldScore - newScore) / c
             if ap > random.random():
-                # Calcualte total score
+                # Calculate total score
                 newScore = TotalScore.totalScore()
             # Decrease temperature
             c = c * a
