@@ -1,67 +1,54 @@
-from helpers import *
-import classes
-from algorithms.randomfunction import *
+from functions.helpers import *
+from classes.classes import *
+from algorithms import randomfunction
 
-
-def Hillclimber(i):
+def Hillclimber():
     """Improves the total score by generating new coords"""
     # backup buildings array
-    functions.helpers.ArrayBackup(classes.classes.Building.buildingsPlaced)
+    ArrayBackup(Building.buildingsPlaced)
 
     # calculate total score
-    oldScore = classes.classes.TotalScore.totalScore()
+    oldScore = TotalScore.totalScore()
 
     # save begin score
     beginScore = oldScore
     newScore = 0
 
     # define iterations
-<<<<<<< HEAD
-    SIZE = i
-=======
     SIZE = 200
->>>>>>> master
 
     # print("executing Hillclimber...")
     for i in range(SIZE):
 
         # Choose random building from Building.buildingsPlaced
-        building = classes.classes.Building.buildingsPlaced[functions.helpers.RandomBuilding()]
+        building = Building.buildingsPlaced[RandomBuilding()]
         xOld = building.x
         yOld = building.y
 
         # get new coords
-        newCoords = functions.helpers.GetCoordinates(building.name, building)
+        newCoords = GetCoordinates(building.name, building)
 
         # apply new coords
         building.x = newCoords[0]
         building.y = newCoords[1]
 
-<<<<<<< HEAD
-        # Calculate new total score
-        newScore = classes.TotalScore.totalScore()
-=======
         # Calculate total score
-        newScore = classes.classes.TotalScore.totalScore()
->>>>>>> master
+        newScore = TotalScore.totalScore()
 
         # if score is not higher, reset to old coordinates
-        if functions.helpers.ScoreComparison(oldScore, newScore):
-            print (oldScore, "is bigger than", newScore)
+        if ScoreComparison(oldScore, newScore):
             building.x = xOld
             building.y = yOld
             continue
         # update score
         oldScore = newScore
-<<<<<<< HEAD
-
-    # print test results
-    print("new score: ${:,.2f}".format(newScore))
-    endScore = newScore - beginScore
+        print("new score: ${:,.2f}".format(oldScore))
+    endScore = oldScore - beginScore
     iterationScore = endScore / SIZE
     print("Improvement on score: ${:,.2f}".format(endScore))
     print("Average improvement per iteration: ${:,.2f}".format(iterationScore))
-    return newScore
+    return oldScore
+
 
 def HillclimberTester():
     """Runs the Hillclimber function a given number of times.
@@ -80,9 +67,3 @@ def HillclimberTester():
         newScore = Hillclimber(i)
         i *= f
     print("done testing")
-=======
-        print("new score:",oldScore)
-        # print("New score:", newScore)
-    print("done!")
-    return oldScore
->>>>>>> master

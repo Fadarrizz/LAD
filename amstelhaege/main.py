@@ -10,30 +10,24 @@
 # import matplotlib.pyplot as plt
 # import matplotlib.patches as patches
 # import matplotlib.ticker as plticker
-from algorithms.randomfunction import *
-<<<<<<< Updated upstream
+from algorithms.randomfunction import random
 import classes.classes
 from functions.helpers import *
-from algorithms.hillclimber import Hillclimber
-=======
-import classes
-from helpers import *
 from algorithms.hillclimber import Hillclimber, HillclimberTester
->>>>>>> Stashed changes
 from algorithms.simulatedannealing import SimulatedAnnealing
 
 def main():
     amount = Amount()
 
-    Grid(random(amount), Variant(Amount), amount, classes.classes.TotalScore.totalScore())
+    Grid(random(amount), Variant(Amount), amount, TotalScore.totalScore())
     # Show map
     plt.show()
 
     # newScore = Hillclimber()
-
+    #
     newScore = SimulatedAnnealing()
 
-    Grid(classes.classes.Building.buildingsPlaced, Variant(Amount), amount, newScore)
+    Grid(Building.buildingsPlaced, Variant(Amount), amount, newScore)
     # Show map
     plt.show()
     #

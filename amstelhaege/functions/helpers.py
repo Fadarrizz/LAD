@@ -10,7 +10,7 @@ from classes.classes import *
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib.ticker as plticker
-import algorithms.randomfunction
+from algorithms import randomfunction
 import operator
 
 ################################################################################
@@ -175,8 +175,8 @@ def GetCoordinates(name, bType):
 
 def GenerateCoordinates(bType):
     """Generates random coordinates"""
-    xBorder = int(theGrid.xMAX - bType.width)
-    yBorder = int(theGrid.yMAX - bType.length)
+    xBorder = int(theGrid.xMAX - bType.width - bType.mtr_clearance)
+    yBorder = int(theGrid.yMAX - bType.length - bType.mtr_clearance)
 
     x = randint(0, xBorder)
     x2 = x + bType.width
@@ -376,7 +376,6 @@ def FreemetersDiagonalTop(y, x, nY,nL,nX,nW,yMAX,xMAX):
         b = y + (nY + nL)
         cSquare = (a**2) + (b**2)
         freeMeters = math.sqrt(cSquare)
-        # print("top left:",freeMeters)
         return freeMeters
     #diagonal check top right
     if (xMAX < nX):
@@ -384,13 +383,11 @@ def FreemetersDiagonalTop(y, x, nY,nL,nX,nW,yMAX,xMAX):
         b = yMAX + nY
         cSquare = (a**2) + (b**2)
         freeMeters = math.sqrt(cSquare)
-        # print("top right:",freeMeters)
         return freeMeters
 
 ################################################################################
 
 def GetSmallestDistance(distances):
-
     smallestDistance = min(float(distance) for distance in distances)
     return smallestDistance
 

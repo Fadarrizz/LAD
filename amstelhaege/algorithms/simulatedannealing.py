@@ -4,9 +4,9 @@
 # file: simulatedannealing.py
 # description: This file contains all helper functions.
 
-import classes
+import classes.classes
 import functions.helpers
-import random
+from algorithms import randomfunction
 import math
 import matplotlib.pyplot as plt
 
