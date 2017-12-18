@@ -77,14 +77,12 @@ class TotalScore(object):
     Scores = []
 
     def totalScore():
-        buildingsPlaced = Building.buildingsPlaced
         score = 0
         # add counter
         count = 0
         # iterate over every house placed
-        for thisHouse in buildingsPlaced:
+        for thisHouse in Building.buildingsPlaced:
             count += 1
-
             # coordinates of the x and y ranges of relative house
             x = thisHouse.x
             xMAX = thisHouse.x + thisHouse.width

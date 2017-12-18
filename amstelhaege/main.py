@@ -24,13 +24,13 @@ def main():
     plt.show()
 
     # newScore = Hillclimber()
-    #
+
     newScore = SimulatedAnnealing()
 
     Grid(Building.buildingsPlaced, Variant(Amount), amount, newScore)
     # Show map
     plt.show()
-    #
+
     # for i in TotalScore.Scores:
     #     plt.plot(TotalScore.Scores[int(i)])
     # plt.ylabel('score')

@@ -4,9 +4,6 @@ from algorithms import randomfunction
 
 def Hillclimber():
     """Improves the total score by generating new coords"""
-    # backup buildings array
-    ArrayBackup(Building.buildingsPlaced)
-
     # calculate total score
     oldScore = TotalScore.totalScore()
 
@@ -14,45 +11,34 @@ def Hillclimber():
     beginScore = oldScore
     newScore = 0
 
-    # define iterations
+    # amount of iterations
     SIZE = 200
 
-    # print("executing Hillclimber...")
     for i in range(SIZE):
-
         # Choose random building from Building.buildingsPlaced
-        building = Building.buildingsPlaced[RandomBuilding()]
-        xOld = building.x
-        yOld = building.y
-
-        # get new coords
-        newCoords = GetCoordinates(building.name, building)
-
-        # apply new coords
-        building.x = newCoords[0]
-        building.y = newCoords[1]
-
-        # Calculate total score
-        newScore = TotalScore.totalScore()
-
-        # if score is not higher, reset to old coordinates
-        if ScoreComparison(oldScore, newScore):
-            building.x = xOld
-            building.y = yOld
-            continue
-        # update score
-        oldScore = newScore
+        b1 = Building.buildingsPlaced[RandomBuilding()]
+        xy1 = (b1.x, b1.y)
+        b2 = SecondRandomBuilding(b1)
+        xy2 = (b2.x, b2.y)
+        # get random boolean for choosing method
+        bool = RandomBoolean()
+        if bool == 0:
+            oldScore = ImproveScoreByGeneratingNewCoords(b1, oldScore)
+        if bool == 1:
+            oldScore = ImproveScoreWithSwapping(b1, b2, xy1, xy2, oldScore)
         print("new score: ${:,.2f}".format(oldScore))
+
+    # variables for printing
     endScore = oldScore - beginScore
     iterationScore = endScore / SIZE
     print("Improvement on score: ${:,.2f}".format(endScore))
     print("Average improvement per iteration: ${:,.2f}".format(iterationScore))
-    return oldScore
 
+    return oldScore
 
 def HillclimberTester():
     """Runs the Hillclimber function a given number of times.
-    The amount of iterations and a factor have to given."""
+    The amount of iterations and a factor have to be given."""
     i = 10
     f = 2
 
@@ -63,7 +49,7 @@ def HillclimberTester():
         print("Iteration:",i)
         amount = 60
         random(amount)
-        print("Random score: ${:,.2f}".format(classes.TotalScore.totalScore()))
+        print("Random score: ${:,.2f}".format(TotalScore.totalScore()))
         newScore = Hillclimber(i)
         i *= f
     print("done testing")
