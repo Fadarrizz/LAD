@@ -1,9 +1,16 @@
+# course: Heuristieken
+# team: LADs
+# names: Daniel Walters, Auke Geerts, Leyla Banchaewa
+# file: hillclimber.py
+# description: This file contains the hillclimber algorithm
+
 from functions.helpers import *
 from classes.classes import *
 from algorithms import randomfunction
 
 def Hillclimber():
-    """Improves the total score by generating new coords"""
+    """Tries to improves the total score by changing coordinates or swap
+    two buildings for every iteration"""
     # calculate total score
     oldScore = TotalScore.totalScore()
 

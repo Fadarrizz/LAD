@@ -28,8 +28,7 @@ def chooseAlgorithm():
 
 def Amount():
     """Ask user input for amount of houses, i.e. the variant of the houseplan.
-    Also returns the amount as an integer.
-    """
+    Also returns the amount as an integer."""
 
     amount = int(input("How many buildings? (20, 40 or 60) \n"))
 
@@ -82,7 +81,7 @@ def Grid(build, variant, amount, totalScore):
     water3 = Waterbody(20, 20, 40, 36)
     water4 = Waterbody(120, 20, 40, 36)
 
-
+    # tests have shown that four waterbodies give the best results
     water = patches.Rectangle((water.x, water.y), water.width,
             water.length, facecolor=Waterbody.color, edgecolor = Waterbody.edgecolor)
     ax.add_artist(water)
@@ -103,14 +102,14 @@ def Grid(build, variant, amount, totalScore):
     for i in build:
         meters = i.mtr_clearance
 
-        # Temp variable with building information
+        # temp variable with building information
         temp = patches.Rectangle((i.x, i.y), i.width, i.length,
                 facecolor=i.color, edgecolor = 'black')
 
         clearance =patches.Rectangle(((i.x - i.mtr_clearance), (i.y - i.mtr_clearance)), (i.width + (i.mtr_clearance * 2)), (i.length+(i.mtr_clearance * 2)),
                 facecolor=i.color, alpha = 0.4)
 
-        # Add building to visual grid
+        # add building to visual grid
         ax.add_artist(temp)
         ax.add_artist(clearance)
 
@@ -183,14 +182,14 @@ def BuildingGenerator(building):
 
 def GetCoordinates(name, bType):
     """"Returns generated coordinates if there isn't any collision"""
-    # Generate random coordinates
+    # generate random coordinates
     coords = GenerateCoordinates(bType)
     x = coords[0]
     x2 = coords[1]
     y = coords[2]
     y2 = coords[3]
 
-    # Check for collision
+    # check for collision
     while collision(name, bType, x, x2, y, y2):
         coords = GenerateCoordinates(bType)
         x = coords[0]
@@ -386,11 +385,11 @@ def Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW):
 def FreemetersLeftOrRight(x,xMAX,nX,nW):
     """Calculates the amount of freemeters for that lies left or right from the
     selected building"""
-    #neighbour on right side
+    # neighbour on right side
     if (xMAX < nX):
         freeMeters = nX - xMAX
         return freeMeters
-    #neighbour on left side
+    # neighbour on left side
     elif(x > (nX + nW)):
         freeMeters = x - (nX + nW)
         return freeMeters
@@ -400,11 +399,11 @@ def FreemetersLeftOrRight(x,xMAX,nX,nW):
 def FreemetersUpOrDown(y,yMAX,nY,nL):
     """Calculates the amount of freemeters for that lies above or under the
     selected building"""
-    #neighbour on top
+    # neighbour on top
     if (yMAX < nY):
         freeMeters = nY - yMAX
         return freeMeters
-    #neighbour bottom
+    # neighbour bottom
     elif (y > (nY + nL)):
         freeMeters = y - (nY + nL)
         return freeMeters
@@ -424,14 +423,14 @@ def FreemetersDiagonal(y, nY,nL):
 def FreemetersDiagonalBottom(y, x, nY,nL,nX,nW,yMAX,xMAX):
     """Calculates the amount of freemeters between a building an its at the
     bottom diagonally-lying neighbour"""
-    #diagonal check bottom left
+    # diagonal check bottom left
     if (x > (nX + nW)):
         a = x - (nX + nW)
         b = y - (nY + nL)
         cSquare = (a**2) + (b**2)
         freeMeters = math.sqrt(cSquare)
         return freeMeters
-    #diagonal check bottom right
+    # diagonal check bottom right
     if (xMAX < nX):
         a = xMAX - nX
         b = yMAX - nY
@@ -444,14 +443,14 @@ def FreemetersDiagonalBottom(y, x, nY,nL,nX,nW,yMAX,xMAX):
 def FreemetersDiagonalTop(y, x, nY,nL,nX,nW,yMAX,xMAX):
     """Calculates the amount of freemeters between a building an its at the top
     diagonally-lying neighbour"""
-    #diagonal check top left
+    # diagonal check top left
     if (x > (nX + nW)):
         a = x + (nX + nW)
         b = y + (nY + nL)
         cSquare = (a**2) + (b**2)
         freeMeters = math.sqrt(cSquare)
         return freeMeters
-    #diagonal check top right
+    # diagonal check top right
     if (xMAX < nX):
         a = xMAX + nX
         b = yMAX + nY
@@ -497,12 +496,6 @@ def ScoreComparison(oldScore, newScore):
     if newScore > oldScore:
         return False
     return True
-
-################################################################################
-
-# def ScoreImprover(SIZE, oldScore):
-#     """Tries to improve the score by selecting a method randomly for every
-#     iteration"""
 
 ################################################################################
 

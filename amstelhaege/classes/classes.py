@@ -1,3 +1,9 @@
+# course: Heuristieken
+# team: LADs
+# names: Daniel Walters, Auke Geerts, Leyla Banchaewa
+# file: classes.py
+# description: This file contains all classes and supporting functions.
+
 import functions.helpers
 
 class theGrid (object):

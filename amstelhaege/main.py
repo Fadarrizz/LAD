@@ -23,8 +23,7 @@ def main():
     # Random selection of house positioning (initial state map)
     Grid(random(amount), Variant(Amount), amount, TotalScore.totalScore())
 
-    # Show map and save map
-    plt.savefig('Initial', bbox_inches='tight')
+    # Show map
     plt.show()
 
     # Run algorithm depending on option selected to change house positioning
@@ -35,8 +34,6 @@ def main():
 
     # Build new map with variations, with hillclimbing or simulated annealing
     Grid(Building.buildingsPlaced, Variant(Amount), amount, newScore)
-
-    plt.savefig('Improved', bbox_inches='tight')
     plt.show()
 
 if __name__ == "__main__":
