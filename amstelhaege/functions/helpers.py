@@ -15,6 +15,17 @@ import operator
 
 ################################################################################
 
+def chooseAlgorithm():
+    option = int(input("Select option: 1. Hillclimber or 2. Simulated Annealing. \n"))
+    algorithm = 0
+
+    while option != 1 and option != 2:
+        print("Option invalid, please choose your option by entering 1 or 2.")
+        option = int(input("Select option: 1. Hillclimber or 2. Simulated Annealing. \n"))
+    return option
+
+################################################################################
+
 def Amount():
     """Ask user input for amount of houses, i.e. the variant of the houseplan.
     Also returns the amount as an integer.
@@ -66,10 +77,10 @@ def Grid(build, variant, amount, totalScore):
     plt.title('score: ${:,.2f}'.format(totalScore))
 
     # static waterbody placement
-    water = Waterbody(10, 114, 40, 36)
-    water2 = Waterbody(130, 114, 40, 36)
-    water3 = Waterbody(10, 10, 40, 36)
-    water4 = Waterbody(130, 10, 40, 36)
+    water = Waterbody(20, 104, 40, 36)
+    water2 = Waterbody(120, 104, 40, 36)
+    water3 = Waterbody(20, 20, 40, 36)
+    water4 = Waterbody(120, 20, 40, 36)
 
 
     water = patches.Rectangle((water.x, water.y), water.width,
@@ -274,10 +285,10 @@ def FreespaceOverlap(bType, n, x, y):
 
 def WaterOverlap(x, y, x2, y2):
     """Checks if the given coordinates are wihtin the water boundaries"""
-    water = Waterbody(10, 114, 40, 36)
-    water2 = Waterbody(130, 114, 40, 36)
-    water3 = Waterbody(10, 10, 40, 36)
-    water4 = Waterbody(130, 10, 40, 36)
+    water = Waterbody(20, 104, 40, 36)
+    water2 = Waterbody(120, 104, 40, 36)
+    water3 = Waterbody(20, 20, 40, 36)
+    water4 = Waterbody(120, 20, 40, 36)
 
     waterX = water.x
     waterY = water.y

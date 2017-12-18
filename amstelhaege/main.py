@@ -7,9 +7,6 @@
 # visualized in a figure on a grid, which also shows a total score of the
 # calculated total value of all the houses.
 
-# import matplotlib.pyplot as plt
-# import matplotlib.patches as patches
-# import matplotlib.ticker as plticker
 from algorithms.randomfunction import random
 import classes.classes
 from functions.helpers import *
@@ -17,27 +14,30 @@ from algorithms.hillclimber import Hillclimber, HillclimberTester
 from algorithms.simulatedannealing import SimulatedAnnealing
 
 def main():
+    # User input for amount of houses is stored as int in 'amount'
     amount = Amount()
 
+    # User input for selection of algorithm is stored as int in 'option'
+    option = chooseAlgorithm()
+
+    # Random selection of house positioning (initial state map)
     Grid(random(amount), Variant(Amount), amount, TotalScore.totalScore())
-    # Show map
+
+    # Show map and save map
+    plt.savefig('Initial', bbox_inches='tight')
     plt.show()
 
-    # newScore = Hillclimber()
+    # Run algorithm depending on option selected to change house positioning
+    if option == 1:
+        newScore = Hillclimber()
+    elif option == 2:
+        newScore = SimulatedAnnealing()
 
-    newScore = SimulatedAnnealing()
-
+    # Build new map with variations, with hillclimbing or simulated annealing
     Grid(Building.buildingsPlaced, Variant(Amount), amount, newScore)
-    # Show map
+
+    plt.savefig('Initial', bbox_inches='tight')
     plt.show()
-
-    # for i in TotalScore.Scores:
-    #     plt.plot(TotalScore.Scores[int(i)])
-    # plt.ylabel('score')
-    # plt.xlabel('iteration')
-    # plt.show()
-
-    # HillclimberTester()
 
 if __name__ == "__main__":
     main()
