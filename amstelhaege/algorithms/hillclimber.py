@@ -8,9 +8,10 @@ from functions.helpers import *
 from classes.classes import *
 from algorithms import randomfunction
 
-def Hillclimber():
+def Hillclimber(count):
     """Tries to improves the total score by changing coordinates or swap
     two buildings for every iteration"""
+
     # calculate total score
     oldScore = TotalScore.totalScore()
 
@@ -19,10 +20,10 @@ def Hillclimber():
     newScore = 0
 
     # amount of iterations
-    SIZE = 1000
+    SIZE = 20
 
     for i in range(SIZE):
-        # Choose random building from Building.buildingsPlaced
+        # choose random building from Building.buildingsPlaced
         b1 = Building.buildingsPlaced[RandomBuilding()]
         xy1 = (b1.x, b1.y)
         oldX = b1.x
@@ -34,7 +35,7 @@ def Hillclimber():
         bool = RandomBoolean()
         if bool == 0:
             newScore = ImproveScoreByGeneratingNewCoords(b1, oldScore)
-            # if score is not higher, update score
+            # if score is higher, update score
             if CheckScoreImprovement(oldScore, newScore):
                 oldScore = newScore
                 continue
@@ -48,21 +49,20 @@ def Hillclimber():
             if CheckScoreImprovement(oldScore, newScore):
                 oldScore = newScore
                 continue
-            #
-            elif oldScore != newScore:
+            # if a swap has been done, swap back
+            elif newScore != 1:
                 SwapCoordinates(b1, b2, xy2, xy1)
-
-        print("new score: ${:,.2f}".format(oldScore))
 
     # variables for printing
     endScore = oldScore - beginScore
     iterationScore = endScore / SIZE
     with open('HILL60.txt', 'a') as f:
+        print("iteration:", count, file=f)
         print("Begin score:", beginScore, file=f)
         print("New score", oldScore, file=f)
         print("Improvement on score: ${:,.2f}".format(endScore), file=f)
         print("Average improvement per iteration: ${:,.2f}".format(iterationScore), file=f)
-
+        print("\n", file=f)
     return oldScore
 
 def HillclimberTester():

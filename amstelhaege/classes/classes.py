@@ -7,6 +7,7 @@
 import functions.helpers
 
 class theGrid (object):
+    """"Class definition for grid"""
     xMAX = 180
     yMAX = 160
 
@@ -74,6 +75,7 @@ class TotalScore(object):
     Scores = []
 
     def totalScore():
+        """"""
         score = 0
         # add counter
         count = 0

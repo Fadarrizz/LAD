@@ -16,12 +16,15 @@ import operator
 ################################################################################
 
 def chooseAlgorithm():
-    option = int(input("Select option: 1. Hillclimber or 2. Simulated Annealing. \n"))
+    """Ask user for which algorithm they wish to use."""
+    option = int(input("Select option: 1. Hillclimber or 2. Simulated Annealing.\
+                        \n"))
     algorithm = 0
 
     while option != 1 and option != 2:
         print("Option invalid, please choose your option by entering 1 or 2.")
-        option = int(input("Select option: 1. Hillclimber or 2. Simulated Annealing. \n"))
+        option = int(input("Select option: 1. Hillclimber or \
+                            2. Simulated Annealing. \n"))
     return option
 
 ################################################################################
@@ -81,21 +84,24 @@ def Grid(build, variant, amount, totalScore):
     water3 = Waterbody(20, 20, 40, 36)
     water4 = Waterbody(120, 20, 40, 36)
 
-    # tests have shown that four waterbodies give the best results
     water = patches.Rectangle((water.x, water.y), water.width,
-            water.length, facecolor=Waterbody.color, edgecolor = Waterbody.edgecolor)
+            water.length, facecolor=Waterbody.color, \
+            edgecolor = Waterbody.edgecolor)
     ax.add_artist(water)
 
     water2 = patches.Rectangle((water2.x, water2.y), water2.width,
-            water2.length, facecolor=Waterbody.color, edgecolor = Waterbody.edgecolor)
+            water2.length, facecolor=Waterbody.color, \
+            edgecolor = Waterbody.edgecolor)
     ax.add_artist(water2)
 
     water3 = patches.Rectangle((water3.x, water3.y), water3.width,
-            water3.length, facecolor=Waterbody.color, edgecolor = Waterbody.edgecolor)
+            water3.length, facecolor=Waterbody.color, \
+            edgecolor = Waterbody.edgecolor)
     ax.add_artist(water3)
 
     water4 = patches.Rectangle((water4.x, water4.y), water4.width,
-            water4.length, facecolor=Waterbody.color, edgecolor = Waterbody.edgecolor)
+            water4.length, facecolor=Waterbody.color, \
+            edgecolor = Waterbody.edgecolor)
     ax.add_artist(water4)
 
     # iterate over each house in the build array build and place house on grid
@@ -106,8 +112,9 @@ def Grid(build, variant, amount, totalScore):
         temp = patches.Rectangle((i.x, i.y), i.width, i.length,
                 facecolor=i.color, edgecolor = 'black')
 
-        clearance =patches.Rectangle(((i.x - i.mtr_clearance), (i.y - i.mtr_clearance)), (i.width + (i.mtr_clearance * 2)), (i.length+(i.mtr_clearance * 2)),
-                facecolor=i.color, alpha = 0.4)
+        clearance = patches.FancyBboxPatch((i.x, i.y), i.width, i.length, \
+                    boxstyle = patches.BoxStyle('round', pad = meters),
+                    color = i.color, alpha = 0.4)
 
         # add building to visual grid
         ax.add_artist(temp)
@@ -216,6 +223,9 @@ def GenerateCoordinates(bType):
 
 def collision(name, bType, x, x2, y, y2):
     """Checks if there is any collision with the chosen coordinates"""
+    xBorder = int(theGrid.xMAX - (bType.width + bType.mtr_clearance))
+    yBorder = int(theGrid.yMAX - (bType.width + bType.mtr_clearance))
+
     if Building.buildingsPlaced == []:
         if WaterOverlap(x, y, x2, y2):
             return True
@@ -232,7 +242,8 @@ def collision(name, bType, x, x2, y, y2):
         # checks for collision
         if Overlap(x, x2, y, y2, xMIN, xMAX, yMIN, yMAX) or \
            CheckFreespaceOverlap(bType, x, y) or \
-           WaterOverlap(x, y, x2, y2):
+           WaterOverlap(x, y, x2, y2) or \
+           CheckBorderCollision(x, y, x2, y2, bType, xBorder, yBorder):
            return True
     return False
 
@@ -283,7 +294,7 @@ def FreespaceOverlap(bType, n, x, y):
 ################################################################################
 
 def WaterOverlap(x, y, x2, y2):
-    """Checks if the given coordinates are wihtin the water boundaries"""
+    """Checks if the given coordinates are within the water boundaries"""
     water = Waterbody(20, 104, 40, 36)
     water2 = Waterbody(120, 104, 40, 36)
     water3 = Waterbody(20, 20, 40, 36)
@@ -313,13 +324,16 @@ def WaterOverlap(x, y, x2, y2):
     if (waterX < x < (waterX + waterWidth) or \
         waterX < x2 < (waterX + waterWidth)) and \
         (waterY < y < (waterY + waterLength) or \
-        waterY < y2 < (waterY + waterLength)) or (waterX2 < x < (waterX2 + waterWidth2) or \
+        waterY < y2 < (waterY + waterLength)) or \
+        (waterX2 < x < (waterX2 + waterWidth2) or \
         waterX2 < x2 < (waterX2 + waterWidth2)) and \
         (waterY2 < y < (waterY2 + waterLength2) or \
-        waterY2 < y2 < (waterY2 + waterLength2)) or (waterX3 < x < (waterX3 + waterWidth3) or \
+        waterY2 < y2 < (waterY2 + waterLength2)) or \
+        (waterX3 < x < (waterX3 + waterWidth3) or \
         waterX3 < x2 < (waterX3 + waterWidth3)) and \
         (waterY3 < y < (waterY3 + waterLength3) or \
-        waterY3 < y2 < (waterY3 + waterLength3)) or (waterX4 < x < (waterX4 + waterWidth4) or \
+        waterY3 < y2 < (waterY3 + waterLength3)) or \
+        (waterX4 < x < (waterX4 + waterWidth4) or \
         waterX4 < x2 < (waterX4 + waterWidth4)) and \
         (waterY4 < y < (waterY4 + waterLength4) or \
         waterY4 < y2 < (waterY4 + waterLength4)):
@@ -413,8 +427,10 @@ def FreemetersUpOrDown(y,yMAX,nY,nL):
 def FreemetersDiagonal(y, nY,nL):
     """Returns a boolean for the side a diagonally-lying neighbour lies in:
     above or under"""
+    # neighbour above building
     if (y > (nY + nL)):
         return 0
+    # neighbour below building
     if (y < (nY + nL)):
         return 1
 
@@ -461,6 +477,7 @@ def FreemetersDiagonalTop(y, x, nY,nL,nX,nW,yMAX,xMAX):
 ################################################################################
 
 def GetSmallestDistance(distances):
+    """Return smallest distance from list"""
     smallestDistance = min(float(distance) for distance in distances)
     return smallestDistance
 
@@ -519,11 +536,12 @@ def ImproveScoreWithSwapping(b1, b2, xy1, xy2, oldScore):
     """Tries to improve the total score by swapping buildings"""
     swap = SwapCoordinates(b1, b2, xy1, xy2)
     if swap == False:
-        return oldScore
+        return 1
+    # apply swap
     b1XY = swap[0]
     b2XY = swap[1]
 
-    # Calculate total score
+    # calculate total score
     newScore = TotalScore.totalScore()
     return newScore
 
@@ -551,6 +569,7 @@ def SwapCoordinates(b1, b2, xy1, xy2):
     b1.y = xy2[1]
     b2.x = xy1[0]
     b2.y = xy1[1]
+
     if collision(b1.name, b1, b1.x, b1.y, b2.x, b2.y) or \
           collision(b2.name, b2, b2.x, b2.y, b1.x, b1.y):
           b1.x = xy1[0]
@@ -558,12 +577,26 @@ def SwapCoordinates(b1, b2, xy1, xy2):
           b2.x = xy2[0]
           b2.y = xy2[1]
           return False
+
     return b1, b2
 
 ################################################################################
 
 def GetHighestScore(scores):
+    """Return highest score from list"""
     index, score = max(enumerate(scores), key=operator.itemgetter(1))
     return score
 
 ################################################################################
+
+def CheckBorderCollision(x, y, xMAX, yMAX, bType, xBorder, yBorder):
+    """Checks if there is any collision with the grid borders"""
+    if (x - bType.mtr_clearance) < 0:
+        return True
+    if (y - bType.mtr_clearance) < 0:
+        return True
+    if (xMAX + bType.mtr_clearance) > xBorder:
+        return True
+    if (yMAX + bType.mtr_clearance) > yBorder:
+        return True
+    return False

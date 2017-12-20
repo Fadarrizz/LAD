@@ -21,13 +21,14 @@ def main():
         amount = 60
 
         # User input for selection of algorithm is stored as int in 'option'
-        option = 2
+        option = 1
 
         # Random selection of house positioning (initial state map)
         Grid(random(amount), Variant(Amount), amount, TotalScore.totalScore())
         # print("initialscore",i,":", TotalScore.totalScore(), file=f)
         # Show map
-        plt.savefig('initial'+str(i), bbox_inches='tight')
+        plt.show()
+        # plt.savefig('initial'+str(i), bbox_inches='tight')
 
         # Run algorithm depending on option selected to change house positioning
         if option == 1:

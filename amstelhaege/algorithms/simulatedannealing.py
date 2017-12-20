@@ -2,7 +2,7 @@
 # team: LADs
 # names: Daniel Walters, Auke Geerts, Leyla Banchaewa
 # file: simulatedannealing.py
-# description: This file contains all helper functions.
+# description: This file contains the Simulated Annealing algorithm.
 
 from classes.classes import *
 from functions.helpers import *
@@ -13,20 +13,23 @@ import random
 
 def SimulatedAnnealing(count):
 
-    #scores Array
+    # empty array
+    TotalScore.Scores = []
+
+    # scores Array
     Scores = TotalScore.Scores
 
-    # Calculate total score
+    # calculate total score
     oldScore = TotalScore.totalScore()
 
-    #save begin score
+    # save begin score
     beginScore = oldScore
 
-    #define newScore
+    # define newScore
     newScore = 0
 
     # define iterations
-    SIZE = 1000
+    SIZE = 20
 
     # define initial temperature and minimal temperature
     c = 1
@@ -38,30 +41,31 @@ def SimulatedAnnealing(count):
     while c > c_min:
         for i in range(SIZE):
 
-            # Choose random building from Building.buildingsPlaced
+            # choose random building from Building.buildingsPlaced
             b1 = Building.buildingsPlaced[RandomBuilding()]
             oldX = b1.x
             oldY = b1.y
+            # define acceptance probility
             ap = (oldScore - newScore) / c
             # generate new coords and calculate new total score
             newScore = ImproveScoreByGeneratingNewCoords(b1, oldScore)
-            # if score is not higher, reset to old coordinates
+            # if score has improved, accept improvement
             if CheckScoreImprovement(oldScore, newScore):
-                # accept improvement
                 oldScore = newScore
-            # define acceptance probility
-
+            # randomly decide to accept deteriorations
             elif ap > random.random():
                 # Calculate total score
                 oldScore = newScore
+            # else, change back coordinates
             else:
                 b1.x = oldX
                 b1.y = oldY
 
-            # Decrease temperature
+            # decrease temperature
             c = c * a
             TotalScore.Scores.append(oldScore)
         oldScore = GetHighestScore(TotalScore.Scores)
+
     # variables for printing
     endScore = oldScore - beginScore
     iterationScore = endScore / SIZE
@@ -72,4 +76,5 @@ def SimulatedAnnealing(count):
         print("Improvement on score: ${:,.2f}".format(endScore), file=f)
         print("Average improvement per iteration: ${:,.2f}".format(iterationScore), file=f)
         print("\n", file=f)
+
     return oldScore

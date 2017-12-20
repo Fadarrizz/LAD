@@ -1,0 +1,77 @@
+iteration: 1
+Begin score: 24889925.98872593
+New score 24949775.98872593
+Improvement on score: $59,850.00
+Average improvement per iteration: $2,992.50
+
+
+iteration: 2
+Begin score: 24028752.74423228
+New score 24166906.54672851
+Improvement on score: $138,153.80
+Average improvement per iteration: $6,907.69
+
+
+iteration: 3
+Begin score: 24443584.475736175
+New score 24469325.828228846
+Improvement on score: $25,741.35
+Average improvement per iteration: $1,287.07
+
+
+iteration: 4
+Begin score: 23964906.288304493
+New score 24227167.62979145
+Improvement on score: $262,261.34
+Average improvement per iteration: $13,113.07
+
+
+iteration: 5
+Begin score: 24520777.215515085
+New score 24568372.215515085
+Improvement on score: $47,595.00
+Average improvement per iteration: $2,379.75
+
+
+iteration: 6
+Begin score: 23454748.588863175
+New score 24339629.04544187
+Improvement on score: $884,880.46
+Average improvement per iteration: $44,244.02
+
+
+iteration: 7
+Begin score: 23632191.787600353
+New score 24068834.37827033
+Improvement on score: $436,642.59
+Average improvement per iteration: $21,832.13
+
+
+iteration: 8
+Begin score: 24111975.0
+New score 24589950.0
+Improvement on score: $477,975.00
+Average improvement per iteration: $23,898.75
+
+
+iteration: 9
+Begin score: 23735490.0
+New score 23735490.0
+Improvement on score: $0.00
+Average improvement per iteration: $0.00
+
+
+iteration: 10
+Begin score: 24771399.18711226
+New score 24869724.18711226
+Improvement on score: $98,325.00
+Average improvement per iteration: $4,916.25
+
+
+iteration: 1
+Begin score: 24008680.3738514
+New score 24038500.3738514
+Improvement on score: $29,820.00
+Average improvement per iteration: $1,491.00
+
+
