@@ -19,20 +19,39 @@ def Hillclimber():
     newScore = 0
 
     # amount of iterations
-    SIZE = 200
+    SIZE = 1000
 
     for i in range(SIZE):
         # Choose random building from Building.buildingsPlaced
         b1 = Building.buildingsPlaced[RandomBuilding()]
         xy1 = (b1.x, b1.y)
+        oldX = b1.x
+        oldY = b1.y
         b2 = SecondRandomBuilding(b1)
         xy2 = (b2.x, b2.y)
+
         # get random boolean for choosing method
         bool = RandomBoolean()
         if bool == 0:
-            oldScore = ImproveScoreByGeneratingNewCoords(b1, oldScore)
+            newScore = ImproveScoreByGeneratingNewCoords(b1, oldScore)
+            # if score is not higher, update score
+            if CheckScoreImprovement(oldScore, newScore):
+                oldScore = newScore
+                continue
+            # else reset to old coordinates
+            b1.x = oldX
+            b1.y = oldY
+
         if bool == 1:
-            oldScore = ImproveScoreWithSwapping(b1, b2, xy1, xy2, oldScore)
+            newScore = ImproveScoreWithSwapping(b1, b2, xy1, xy2, oldScore)
+            # if score is higher, update score
+            if CheckScoreImprovement(oldScore, newScore):
+                oldScore = newScore
+                continue
+            #
+            elif oldScore != newScore:
+                SwapCoordinates(b1, b2, xy2, xy1)
+
         print("new score: ${:,.2f}".format(oldScore))
 
     # variables for printing
