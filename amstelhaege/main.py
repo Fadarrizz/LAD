@@ -1,7 +1,7 @@
 # course: Heuristieken
 # team: LADs
 # names: Daniel Walters, Auke Geerts, Leyla Banchaewa
-# file: helpers.py
+# file: main.py
 # description: This file contains a program that can generate three variants of
 # a housingplan with 20, 40 or 60 houses and water. The housingplan is
 # visualized in a figure on a grid, which also shows a total score of the
@@ -14,7 +14,9 @@ from algorithms.hillclimber import Hillclimber, HillclimberTester
 from algorithms.simulatedannealing import SimulatedAnnealing
 
 def main():
+    count = 0
     for i in range(20):
+        count += 1
         # User input for amount of houses is stored as int in 'amount'
         amount = 60
 
@@ -23,19 +25,19 @@ def main():
 
         # Random selection of house positioning (initial state map)
         Grid(random(amount), Variant(Amount), amount, TotalScore.totalScore())
-        print("initialscore",i,":", TotalScore.totalScore())
+        # print("initialscore",i,":", TotalScore.totalScore(), file=f)
         # Show map
         plt.savefig('initial'+str(i), bbox_inches='tight')
 
         # Run algorithm depending on option selected to change house positioning
         if option == 1:
-            newScore = Hillclimber()
+            newScore = Hillclimber(count)
         elif option == 2:
-            newScore = SimulatedAnnealing()
+            newScore = SimulatedAnnealing(count)
 
         # Build new map with variations, with hillclimbing or simulated annealing
         Grid(Building.buildingsPlaced, Variant(Amount), amount, newScore)
-        print("improvedscore",i,":", newScore)
+        # print("improvedscore",i,":", newScore, file=f)
         # Show map
         plt.savefig('improved'+str(i), bbox_inches='tight')
 

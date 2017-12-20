@@ -11,7 +11,7 @@ import math
 import matplotlib.pyplot as plt
 import random
 
-def SimulatedAnnealing():
+def SimulatedAnnealing(count):
 
     #scores Array
     Scores = TotalScore.Scores
@@ -36,7 +36,6 @@ def SimulatedAnnealing():
     a = 0.9
 
     while c > c_min:
-        iteration = 1
         for i in range(SIZE):
 
             # Choose random building from Building.buildingsPlaced
@@ -61,12 +60,16 @@ def SimulatedAnnealing():
 
             # Decrease temperature
             c = c * a
-            iteration += 1
             TotalScore.Scores.append(oldScore)
         oldScore = GetHighestScore(TotalScore.Scores)
     # variables for printing
     endScore = oldScore - beginScore
     iterationScore = endScore / SIZE
-    print("Improvement on score: ${:,.2f}".format(endScore))
-    print("Average improvement per iteration: ${:,.2f}".format(iterationScore))
+    with open('SA60.txt', 'a') as f:
+        print("iteration:", count, file=f)
+        print("Begin score:", beginScore, file=f)
+        print("New score", oldScore, file=f)
+        print("Improvement on score: ${:,.2f}".format(endScore), file=f)
+        print("Average improvement per iteration: ${:,.2f}".format(iterationScore), file=f)
+        print("\n", file=f)
     return oldScore

@@ -57,8 +57,11 @@ def Hillclimber():
     # variables for printing
     endScore = oldScore - beginScore
     iterationScore = endScore / SIZE
-    print("Improvement on score: ${:,.2f}".format(endScore))
-    print("Average improvement per iteration: ${:,.2f}".format(iterationScore))
+    with open('HILL60.txt', 'a') as f:
+        print("Begin score:", beginScore, file=f)
+        print("New score", oldScore, file=f)
+        print("Improvement on score: ${:,.2f}".format(endScore), file=f)
+        print("Average improvement per iteration: ${:,.2f}".format(iterationScore), file=f)
 
     return oldScore
 
