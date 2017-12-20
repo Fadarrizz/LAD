@@ -26,7 +26,7 @@ def SimulatedAnnealing():
     newScore = 0
 
     # define iterations
-    SIZE = 20000
+    SIZE = 1000
 
     # define initial temperature and minimal temperature
     c = 1
@@ -41,23 +41,26 @@ def SimulatedAnnealing():
 
             # Choose random building from Building.buildingsPlaced
             b1 = Building.buildingsPlaced[RandomBuilding()]
-            xy1 = (b1.x, b1.y)
-            b2 = SecondRandomBuilding(b1)
-            xy2 = (b2.x, b2.y)
-            # get random boolean for choosing method
-            bool = RandomBoolean()
-            if bool == 0:
-                newScore = ImproveScoreByGeneratingNewCoords(b1, oldScore)
-            if bool == 1:
-                newScore = ImproveScoreWithSwapping(b1, b2, xy1, xy2, oldScore)
-            # define acceptance probility
+            oldX = b1.x
+            oldY = b1.y
             ap = (oldScore - newScore) / c
-            if ap > random.random():
+            # generate new coords and calculate new total score
+            newScore = ImproveScoreByGeneratingNewCoords(b1, oldScore)
+            # if score is not higher, reset to old coordinates
+            if CheckScoreImprovement(oldScore, newScore):
+                # accept improvement
+                oldScore = newScore
+            # define acceptance probility
+
+            elif ap > random.random():
                 # Calculate total score
-                newScore = TotalScore.totalScore()
+                oldScore = newScore
+            else:
+                b1.x = oldX
+                b1.y = oldY
+
             # Decrease temperature
             c = c * a
-            oldScore = newScore
             iteration += 1
             TotalScore.Scores.append(oldScore)
         oldScore = GetHighestScore(TotalScore.Scores)

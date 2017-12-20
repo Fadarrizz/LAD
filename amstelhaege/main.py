@@ -14,27 +14,30 @@ from algorithms.hillclimber import Hillclimber, HillclimberTester
 from algorithms.simulatedannealing import SimulatedAnnealing
 
 def main():
-    # User input for amount of houses is stored as int in 'amount'
-    amount = Amount()
+    for i in range(20):
+        # User input for amount of houses is stored as int in 'amount'
+        amount = 60
 
-    # User input for selection of algorithm is stored as int in 'option'
-    option = chooseAlgorithm()
+        # User input for selection of algorithm is stored as int in 'option'
+        option = 2
 
-    # Random selection of house positioning (initial state map)
-    Grid(random(amount), Variant(Amount), amount, TotalScore.totalScore())
+        # Random selection of house positioning (initial state map)
+        Grid(random(amount), Variant(Amount), amount, TotalScore.totalScore())
+        print("initialscore",i,":", TotalScore.totalScore())
+        # Show map
+        plt.savefig('initial'+str(i), bbox_inches='tight')
 
-    # Show map
-    plt.show()
+        # Run algorithm depending on option selected to change house positioning
+        if option == 1:
+            newScore = Hillclimber()
+        elif option == 2:
+            newScore = SimulatedAnnealing()
 
-    # Run algorithm depending on option selected to change house positioning
-    if option == 1:
-        newScore = Hillclimber()
-    elif option == 2:
-        newScore = SimulatedAnnealing()
-
-    # Build new map with variations, with hillclimbing or simulated annealing
-    Grid(Building.buildingsPlaced, Variant(Amount), amount, newScore)
-    plt.show()
+        # Build new map with variations, with hillclimbing or simulated annealing
+        Grid(Building.buildingsPlaced, Variant(Amount), amount, newScore)
+        print("improvedscore",i,":", newScore)
+        # Show map
+        plt.savefig('improved'+str(i), bbox_inches='tight')
 
 if __name__ == "__main__":
     main()

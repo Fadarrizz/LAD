@@ -203,8 +203,8 @@ def GetCoordinates(name, bType):
 
 def GenerateCoordinates(bType):
     """Generates random coordinates within a certain boundary"""
-    xBorder = int(theGrid.xMAX - bType.width - bType.mtr_clearance)
-    yBorder = int(theGrid.yMAX - bType.length - bType.mtr_clearance)
+    xBorder = int(theGrid.xMAX - (bType.width + bType.mtr_clearance))
+    yBorder = int(theGrid.yMAX - (bType.width + bType.mtr_clearance))
 
     x = randint(bType.mtr_clearance, xBorder)
     x2 = x + bType.width
@@ -343,7 +343,7 @@ def DistanceToNeighbours(x, xMAX, y, yMAX, thisHouse):
 
         # skip the indicated house
         if (thisHouse.name == neighbour.name):
-            pass
+            continue
         else:
             if Freemeters(y,yMAX,x,xMAX,nY,nX,nL,nW) == 0:
                 freeMeters = FreemetersLeftOrRight(x,xMAX,nX,nW)
@@ -491,19 +491,17 @@ def RandomBuilding():
 
 ################################################################################
 
-def ScoreComparison(oldScore, newScore):
+def CheckScoreImprovement(oldScore, newScore):
     """Compares old score with new score"""
     if newScore > oldScore:
-        return False
-    return True
+        return True
+    return False
 
 ################################################################################
 
 def ImproveScoreByGeneratingNewCoords(b1, oldScore):
     """Tries to improve the total score by generating new coordinates for a
     single building"""
-    oldX = b1.x
-    oldY = b1.y
     # get new coords
     newCoords = GetCoordinates(b1.name, b1)
 
@@ -513,15 +511,7 @@ def ImproveScoreByGeneratingNewCoords(b1, oldScore):
 
     # Calculate total score
     newScore = TotalScore.totalScore()
-
-    # if score is not higher, reset to old coordinates
-    if ScoreComparison(oldScore, newScore):
-        b1.x = oldX
-        b1.y = oldY
-    # else update score
-    else:
-        oldScore = newScore
-    return oldScore
+    return newScore
 
 ################################################################################
 
@@ -535,13 +525,7 @@ def ImproveScoreWithSwapping(b1, b2, xy1, xy2, oldScore):
 
     # Calculate total score
     newScore = TotalScore.totalScore()
-    # if score is not higher, swap coords back to original
-    if ScoreComparison(oldScore, newScore):
-        SwapCoordinates(b1, b2, xy2, xy1)
-    # else update score
-    else:
-        oldScore = newScore
-    return oldScore
+    return newScore
 
 ################################################################################
 

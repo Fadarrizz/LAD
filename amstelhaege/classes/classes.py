@@ -27,12 +27,6 @@ class Building(object):
         self.name   = name
         self.x      = x
         self.y      = y
-        self.LB     = x, y
-        self.LT = (x, (y + self.length))
-        self.RT = ((x + self.width), (y + self.length))
-        self.RB = ((x + self.width), y)
-        self.coordinates = [(x,y), (x, (y + self.length)), ((x + self.width),
-                        (y + self.length)), ((x + self.width), y)]
 
 class House(Building):
     """Class definition for a detached house."""
@@ -73,9 +67,6 @@ class Waterbody(object):
         self.y      = y
         self.width  = width
         self.length = length
-
-        self.a = self.width / 2
-        self.b = self.length / 2
 
 #################################################################################
 
